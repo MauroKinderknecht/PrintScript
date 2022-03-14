@@ -25,7 +25,6 @@ enum class TokenTypes(override val type: String): TokenType {
     IDENTIFIER("IDENTIFIER"),
 
     // Elements
-    NEWLINE("NEWLINE"),
     WHITESPACE("WHITESPACE"),
     EOF("EOF"),
     COLON("COLON"),

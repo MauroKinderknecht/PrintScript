@@ -17,10 +17,11 @@ class LexerImpl: Lexer {
     init {
         // Keywords
         matchers[TokenTypes.LET] = LexerMatcherImpl(TokenTypes.LET, "let")
+        matchers[TokenTypes.PRINTLN] = LexerMatcherImpl(TokenTypes.PRINTLN, "println")
 
         // Types
-        matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING,"String")
-        matchers[TokenTypes.TYPENUMBER] = LexerMatcherImpl(TokenTypes.TYPENUMBER, "Number")
+        matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING,"string")
+        matchers[TokenTypes.TYPENUMBER] = LexerMatcherImpl(TokenTypes.TYPENUMBER, "number")
 
         // Operations
         matchers[TokenTypes.PLUS] = LexerMatcherImpl(TokenTypes.PLUS, "[+]")
@@ -28,6 +29,8 @@ class LexerImpl: Lexer {
         matchers[TokenTypes.TIMES] = LexerMatcherImpl(TokenTypes.TIMES, "[*]")
         matchers[TokenTypes.DIVIDEDBY] = LexerMatcherImpl(TokenTypes.DIVIDEDBY, "[/]")
         matchers[TokenTypes.ASSIGNMENT] = LexerMatcherImpl(TokenTypes.ASSIGNMENT, "[=]")
+        matchers[TokenTypes.OPENPAREN] = LexerMatcherImpl(TokenTypes.OPENPAREN, "[(]")
+        matchers[TokenTypes.CLOSEPAREN] = LexerMatcherImpl(TokenTypes.CLOSEPAREN, "[)]")
 
         // Declarations
         matchers[TokenTypes.NUMBER] = LexerMatcherImpl(TokenTypes.NUMBER, "-?[0-9.]+")
@@ -38,8 +41,8 @@ class LexerImpl: Lexer {
 
         // Elements
         matchers[TokenTypes.WHITESPACE] = LexerMatcherImpl(TokenTypes.WHITESPACE, " ")
-        matchers[TokenTypes.COLON] = LexerMatcherImpl(TokenTypes.COLON, ":")
-        matchers[TokenTypes.SEMICOLON] = LexerMatcherImpl(TokenTypes.SEMICOLON, ";")
+        matchers[TokenTypes.COLON] = LexerMatcherImpl(TokenTypes.COLON, "[:]")
+        matchers[TokenTypes.SEMICOLON] = LexerMatcherImpl(TokenTypes.SEMICOLON, "[;]")
     }
 
     override fun lex(source: InputStreamReader): List<Token> {

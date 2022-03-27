@@ -51,12 +51,6 @@ class LexerTest {
     }
 
     @Test
-    fun numberFloatAssignationTest() {
-        val tokens = lexer.lex(toInputStreamReader("a = 2;"))
-        assertEquals(7, tokens.size)
-    }
-
-    @Test
     fun numberDeclarationAssignationTest() {
         val tokens = lexer.lex(toInputStreamReader("let a: String = 2.123;"))
         assertEquals(12, tokens.size)

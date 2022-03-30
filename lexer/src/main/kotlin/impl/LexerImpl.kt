@@ -1,6 +1,7 @@
 package impl
 
 import exception.LexerException
+import impl.enums.TokenTypes
 import interfaces.Lexer
 import interfaces.LexerMatcher
 import org.austral.ingsis.printscript.common.LexicalRange

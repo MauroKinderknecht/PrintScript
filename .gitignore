@@ -4,5 +4,6 @@
 /build/
 
 */build/
+*/.gradle/
 
 gradle.properties

@@ -33,11 +33,11 @@ class LexerImpl : Lexer {
         matchers[TokenTypes.CLOSEPAREN] = LexerMatcherImpl(TokenTypes.CLOSEPAREN, "[)]")
 
         // Declarations
-        matchers[TokenTypes.NUMBER] = LexerMatcherImpl(TokenTypes.NUMBER, "-?\d+\.?\d*")
+        matchers[TokenTypes.NUMBER] = LexerMatcherImpl(TokenTypes.NUMBER, "-?\\d+\\.?\\d*")
         matchers[TokenTypes.STRING] = LexerMatcherImpl(TokenTypes.STRING, "\".*\"|\'.*\'")
 
         // Variables
-        matchers[TokenTypes.IDENTIFIER] = LexerMatcherImpl(TokenTypes.IDENTIFIER, "(?:\b[_a-zA-Z]|\B\$)[_\$a-zA-Z0-9]*+")
+        matchers[TokenTypes.IDENTIFIER] = LexerMatcherImpl(TokenTypes.IDENTIFIER, "(?:\\b[_a-zA-Z]|\\B\\$)[_\$a-zA-Z0-9]*+")
 
         // Elements
         matchers[TokenTypes.WHITESPACE] = LexerMatcherImpl(TokenTypes.WHITESPACE, " ")

@@ -6,4 +6,5 @@ import java.io.InputStreamReader
 interface Lexer {
 
     fun lex(source: InputStreamReader): List<Token>
+
 }

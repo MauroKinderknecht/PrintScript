@@ -1,3 +1,4 @@
 package interfaces
 
-interface TokenBuilder
+interface TokenBuilder {
+}

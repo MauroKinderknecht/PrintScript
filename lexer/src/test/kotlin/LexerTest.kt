@@ -17,7 +17,6 @@ class LexerTest {
         val tokens = lexer.lex(toInputStreamReader("let a: String;"))
         val expected = File("./src/test/kotlin/testLexer/testLexer1.txt").readText()
         assertEquals(tokens.toString(), expected)
-
     }
 
     @Test
@@ -74,5 +73,4 @@ class LexerTest {
         val expected = File("./src/test/kotlin/testLexer/testNewLine.tokens.txt").readText()
         assertEquals(tokens.toString(), expected)
     }
-
 }

@@ -10,7 +10,7 @@ import java.io.InputStreamReader
 import java.util.*
 import java.util.stream.Collectors
 
-class LexerImpl: Lexer {
+class LexerImpl : Lexer {
 
     private var matchers: EnumMap<TokenTypes, LexerMatcher> = EnumMap(TokenTypes::class.java)
 
@@ -20,7 +20,7 @@ class LexerImpl: Lexer {
         matchers[TokenTypes.PRINTLN] = LexerMatcherImpl(TokenTypes.PRINTLN, "println")
 
         // Types
-        matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING,"string")
+        matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING, "string")
         matchers[TokenTypes.TYPENUMBER] = LexerMatcherImpl(TokenTypes.TYPENUMBER, "number")
 
         // Operations
@@ -65,13 +65,16 @@ class LexerImpl: Lexer {
 
             // Check matches with tokens
             val matched: Token = matchers.keys.stream().filter {
-                tokenType -> matcher.group(tokenType.type) != null
+                    tokenType ->
+                matcher.group(tokenType.type) != null
             }.findFirst().map {
-                tokenType -> Token(
+                    tokenType ->
+                Token(
                     tokenType,
                     position,
                     position + match.length,
-                    LexicalRange(column, line, column + match.length, line))
+                    LexicalRange(column, line, column + match.length, line)
+                )
             }.orElseThrow { LexerException("Unexpected token") }
             tokens += matched
             column += match.length
@@ -83,7 +86,7 @@ class LexerImpl: Lexer {
             position,
             LexicalRange(column, line, column, line)
         )
-        //tokens.map { token -> println(token) }
+        // tokens.map { token -> println(token) }
         return tokens
     }
 }

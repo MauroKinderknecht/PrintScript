@@ -6,7 +6,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import java.util.stream.Collectors
 
-class LexerMatcherImpl: LexerMatcher {
+class LexerMatcherImpl : LexerMatcher {
 
     private val ptrn: Pattern
 
@@ -15,13 +15,15 @@ class LexerMatcherImpl: LexerMatcher {
     }
 
     constructor(matchers: List<LexerMatcher>) {
-        ptrn = Pattern.compile(matchers.stream().map {
-                matcher -> matcher.getPattern().toString()
-        }.collect(Collectors.joining("|")))
+        ptrn = Pattern.compile(
+            matchers.stream().map {
+                    matcher ->
+                matcher.getPattern().toString()
+            }.collect(Collectors.joining("|"))
+        )
     }
 
     override fun getPattern(): Pattern = ptrn
 
     override fun getMatcher(input: String): Matcher = ptrn.matcher(input)
-
 }

@@ -2,7 +2,7 @@ package impl
 
 import org.austral.ingsis.printscript.common.TokenType
 
-enum class TokenTypes(override val type: String): TokenType {
+enum class TokenTypes(override val type: String) : TokenType {
     // Keywords - Should be declared first to match first
     LET("LET"),
     PRINTLN("PRINTLN"),

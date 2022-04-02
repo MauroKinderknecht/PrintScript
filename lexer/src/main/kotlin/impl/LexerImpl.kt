@@ -8,7 +8,7 @@ import org.austral.ingsis.printscript.common.LexicalRange
 import org.austral.ingsis.printscript.common.Token
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.util.*
+import java.util.EnumMap
 import java.util.stream.Collectors
 
 class LexerImpl : Lexer {

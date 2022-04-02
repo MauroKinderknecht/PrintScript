@@ -1,0 +1,25 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id 'org.jmailen.kotlinter'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/austral-ingsis/printscript-parser-common")
+        credentials {
+            username = project.findProperty("gpr.user") as String ?: System.getenv("USERNAME")
+            password = project.findProperty("gpr.key") as String ?: System.getenv("TOKEN")
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.austral.ingsis.printscript:printscript-parser-common:0.1.0'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

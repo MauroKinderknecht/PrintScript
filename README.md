@@ -15,7 +15,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jmailen.gradle.kotlinter.tasks.*
 
 plugins {
-    id("org.jmailen.kotlinter") version "3.9.0" apply false
+    
 }
 
 tasks.test {

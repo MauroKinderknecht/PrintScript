@@ -3,4 +3,7 @@
 /.idea/
 /build/
 
+*/build/
+*/.gradle/
+
 gradle.properties

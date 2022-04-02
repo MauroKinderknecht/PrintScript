@@ -11,10 +11,14 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup gradle.properties
         env:
-          GRADLE_PROPERTIES: ${{ secrets.GRADLE_PROPERTIES }}
+          GITHUB_USER: ${{ secrets.USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         shell: bash
         run: |
-          echo ${GRADLE_PROPERTIES} > gradle.properties
+          touch gradle.properties
+          echo gpr.user = ${GITHUB_USER} >> gradle.properties
+          echo gpr.key = ${GITHUB_TOKEN} >> gradle.properties
+          echo kotlin.code.style=official >> gradle.properties
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:

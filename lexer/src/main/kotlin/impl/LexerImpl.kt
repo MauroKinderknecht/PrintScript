@@ -7,6 +7,7 @@ import interfaces.LexerMatcher
 import org.austral.ingsis.printscript.common.LexicalRange
 import org.austral.ingsis.printscript.common.Token
 import java.util.EnumMap
+import java.util.regex.Matcher
 
 class LexerImpl : Lexer {
 
@@ -18,8 +19,8 @@ class LexerImpl : Lexer {
         matchers[TokenTypes.PRINTLN] = LexerMatcherImpl(TokenTypes.PRINTLN, "println")
 
         // Types
-        matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING, "string")
-        matchers[TokenTypes.TYPENUMBER] = LexerMatcherImpl(TokenTypes.TYPENUMBER, "number")
+        matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING, "String")
+        matchers[TokenTypes.TYPENUMBER] = LexerMatcherImpl(TokenTypes.TYPENUMBER, "Number")
 
         // Operations
         matchers[TokenTypes.PLUS] = LexerMatcherImpl(TokenTypes.PLUS, "[+]")
@@ -41,47 +42,48 @@ class LexerImpl : Lexer {
         matchers[TokenTypes.WHITESPACE] = LexerMatcherImpl(TokenTypes.WHITESPACE, " ")
         matchers[TokenTypes.COLON] = LexerMatcherImpl(TokenTypes.COLON, "[:]")
         matchers[TokenTypes.SEMICOLON] = LexerMatcherImpl(TokenTypes.SEMICOLON, "[;]")
+        matchers[TokenTypes.EOL] = LexerMatcherImpl(TokenTypes.EOL, "\n")
     }
 
     override fun lex(source: String): List<Token> {
         val matcher = LexerMatcherImpl(matchers.values.toList()).getMatcher(source)
+        return getTokens(matcher)
+    }
+
+    private fun getTokens(matcher: Matcher): List<Token> {
         val tokens: MutableList<Token> = emptyList<Token>().toMutableList()
         var line = 0
         var position = 0
         var column = 0
+
+        // Find matches and add to token list
         while (matcher.find()) {
             val match = matcher.group()
 
-            // Skip empty lines
-            if (match.equals("\n")) {
-                line++
-                column = 0
-                continue
-            }
-
             // Check matches with tokens
-            val matched: Token = matchers.keys.stream().filter {
-                    tokenType ->
-                matcher.group(tokenType.type) != null
-            }.findFirst().map {
-                    tokenType ->
-                Token(
-                    tokenType,
-                    position,
-                    position + match.length,
-                    LexicalRange(column, line, column + match.length, line)
-                )
-            }.orElseThrow { LexerException("Unexpected token") }
+            val matched: Token = matchers.keys.stream()
+                .filter { tokenType ->
+                    matcher.group(tokenType.type) != null
+                }.findFirst().map { tokenType ->
+                    val endColumn = if (tokenType == TokenTypes.EOL) 0 else column + match.length
+                    val endLine = if (tokenType == TokenTypes.EOL) line + 1 else line
+                    val endPos = position + match.length
+
+                    val token = Token(tokenType, position, endPos, LexicalRange(column, line, endColumn, endLine))
+
+                    column = endColumn
+                    line = endLine
+                    position = endPos
+
+                    token
+                }.orElseThrow { LexerException("Unexpected token") }
+
             tokens += matched
-            column += match.length
-            position += match.length
         }
-        tokens += Token(
-            TokenTypes.EOF,
-            position,
-            position,
-            LexicalRange(column, line, column, line)
-        )
+
+        // Add EOF token
+        tokens += Token(TokenTypes.EOF, position, position, LexicalRange(column, line, column, line))
+
         return tokens
     }
 }

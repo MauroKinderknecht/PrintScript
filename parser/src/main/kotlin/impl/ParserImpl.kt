@@ -26,6 +26,14 @@ class ParserImpl: Parser {
 
     private fun buildTree(tree: ASTTree, consumer: TokenConsumer): ASTTree {
         if (consumer.peek(TokenTypes.EOF) != null) return tree;
-        else return tree;
+        else parseStatement(consumer);
+    }
+
+    private fun parseStatement(consumer: TokenConsumer): ASTTree {
+        while (consumer.peek(TokenTypes.SEMICOLON) == null) {
+            println(consumer.current())
+            consumer.consume(consumer.current().type)
+        }
+        return emptyTree()
     }
 }

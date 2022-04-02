@@ -30,6 +30,7 @@ enum class TokenTypes(override val type: String) : TokenType {
     // Elements
     WHITESPACE("WHITESPACE"),
     EOF("EOF"),
+    EOL("EOL"),
     COLON("COLON"),
     SEMICOLON("SEMICOLON")
 }

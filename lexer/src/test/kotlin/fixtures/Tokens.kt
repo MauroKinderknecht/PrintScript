@@ -146,7 +146,8 @@ val tokens_012 = listOf(
     Token(type= TokenTypes.WHITESPACE, from=7, to=8, range=LexicalRange(startCol=7, startLine=0, endCol=8, endLine=0)),
     Token(type= TokenTypes.NUMBER, from=8, to=9, range=LexicalRange(startCol=8, startLine=0, endCol=9, endLine=0)),
     Token(type= TokenTypes.SEMICOLON, from=9, to=10, range=LexicalRange(startCol=9, startLine=0, endCol=10, endLine=0)),
-    Token(type= TokenTypes.EOF, from=10, to=10, range=LexicalRange(startCol=10, startLine=0, endCol=10, endLine=0)))
+    Token(type= TokenTypes.EOF, from=10, to=10, range=LexicalRange(startCol=10, startLine=0, endCol=10, endLine=0))
+)
 
 val tokens_013 = listOf(
     Token(type= TokenTypes.IDENTIFIER, from=0, to=1, range=LexicalRange(startCol=0, startLine=0, endCol=1, endLine=0)),
@@ -159,7 +160,8 @@ val tokens_013 = listOf(
     Token(type= TokenTypes.WHITESPACE, from=7, to=8, range=LexicalRange(startCol=7, startLine=0, endCol=8, endLine=0)),
     Token(type= TokenTypes.NUMBER, from=8, to=9, range=LexicalRange(startCol=8, startLine=0, endCol=9, endLine=0)),
     Token(type= TokenTypes.SEMICOLON, from=9, to=10, range=LexicalRange(startCol=9, startLine=0, endCol=10, endLine=0)),
-    Token(type= TokenTypes.EOF, from=10, to=10, range=LexicalRange(startCol=10, startLine=0, endCol=10, endLine=0)))
+    Token(type= TokenTypes.EOF, from=10, to=10, range=LexicalRange(startCol=10, startLine=0, endCol=10, endLine=0))
+)
 
 val tokens_014 = listOf(
     Token(type= TokenTypes.IDENTIFIER, from=0, to=1, range=LexicalRange(startCol=0, startLine=0, endCol=1, endLine=0)),
@@ -172,4 +174,5 @@ val tokens_014 = listOf(
     Token(type= TokenTypes.WHITESPACE, from=7, to=8, range=LexicalRange(startCol=7, startLine=0, endCol=8, endLine=0)),
     Token(type= TokenTypes.NUMBER, from=8, to=9, range=LexicalRange(startCol=8, startLine=0, endCol=9, endLine=0)),
     Token(type= TokenTypes.SEMICOLON, from=9, to=10, range=LexicalRange(startCol=9, startLine=0, endCol=10, endLine=0)),
-    Token(type= TokenTypes.EOF, from=10, to=10, range=LexicalRange(startCol=10, startLine=0, endCol=10, endLine=0)))
+    Token(type= TokenTypes.EOF, from=10, to=10, range=LexicalRange(startCol=10, startLine=0, endCol=10, endLine=0))
+)

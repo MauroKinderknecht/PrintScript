@@ -32,5 +32,8 @@ enum class TokenTypes(override val type: String) : TokenType {
     EOF("EOF"),
     EOL("EOL"),
     COLON("COLON"),
-    SEMICOLON("SEMICOLON")
+    SEMICOLON("SEMICOLON"),
+
+    // No match token
+    NOMATCH("NOMATCH")
 }

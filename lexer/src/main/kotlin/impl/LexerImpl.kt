@@ -36,13 +36,15 @@ class LexerImpl : Lexer {
         matchers[TokenTypes.STRING] = LexerMatcherImpl(TokenTypes.STRING, "\".*\"|\'.*\'")
 
         // Variables
-        matchers[TokenTypes.IDENTIFIER] = LexerMatcherImpl(TokenTypes.IDENTIFIER, "(?:\\b[_a-zA-Z]|\\B\\$)[_\$a-zA-Z0-9]*+")
+        matchers[TokenTypes.IDENTIFIER] = LexerMatcherImpl(TokenTypes.IDENTIFIER, "[_a-zA-Z][_a-zA-Z0-9]*")
 
         // Elements
         matchers[TokenTypes.WHITESPACE] = LexerMatcherImpl(TokenTypes.WHITESPACE, " ")
         matchers[TokenTypes.COLON] = LexerMatcherImpl(TokenTypes.COLON, "[:]")
         matchers[TokenTypes.SEMICOLON] = LexerMatcherImpl(TokenTypes.SEMICOLON, "[;]")
         matchers[TokenTypes.EOL] = LexerMatcherImpl(TokenTypes.EOL, "\n")
+
+        matchers[TokenTypes.NOMATCH] = LexerMatcherImpl(TokenTypes.NOMATCH, ".+")
     }
 
     override fun lex(source: String): List<Token> {
@@ -65,6 +67,8 @@ class LexerImpl : Lexer {
                 .filter { tokenType ->
                     matcher.group(tokenType.type) != null
                 }.findFirst().map { tokenType ->
+                    if (tokenType == TokenTypes.NOMATCH) throw LexerException("Unexpected token at ${line}:${column}")
+
                     val endColumn = if (tokenType == TokenTypes.EOL) 0 else column + match.length
                     val endLine = if (tokenType == TokenTypes.EOL) line + 1 else line
                     val endPos = position + match.length
@@ -76,7 +80,7 @@ class LexerImpl : Lexer {
                     position = endPos
 
                     token
-                }.orElseThrow { LexerException("Unexpected token") }
+                }.orElseThrow { LexerException("Unexpected token at ${line}:${column}") }
 
             tokens += matched
         }

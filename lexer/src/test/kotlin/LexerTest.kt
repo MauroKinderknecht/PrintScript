@@ -1,9 +1,11 @@
+import exception.LexerException
 import fixtures.*
 import impl.LexerImpl
 import impl.enums.TokenTypes
 import interfaces.Lexer
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class LexerTest {
 
@@ -416,6 +418,53 @@ class LexerTest {
 
         assertEquals(2, tokens.size)
         assertEquals(expected, tokens[0].type)
+    }
+
+    // Exception test
+
+    @Test
+    fun test046_exceptionTest() {
+        assertFailsWith<LexerException>(
+            block = {
+                lexer.lex(src_046)
+            }
+        )
+    }
+
+    @Test
+    fun test047_exceptionTest() {
+        assertFailsWith<LexerException>(
+            block = {
+                lexer.lex(src_047)
+            }
+        )
+    }
+
+    @Test
+    fun test048_exceptionTest() {
+        assertFailsWith<LexerException>(
+            block = {
+                lexer.lex(src_048)
+            }
+        )
+    }
+
+    @Test
+    fun test049_exceptionTest() {
+        assertFailsWith<LexerException>(
+            block = {
+                lexer.lex(src_049)
+            }
+        )
+    }
+
+    @Test
+    fun test050_exceptionTest() {
+        assertFailsWith<LexerException>(
+            block = {
+                lexer.lex(src_050)
+            }
+        )
     }
 
 }

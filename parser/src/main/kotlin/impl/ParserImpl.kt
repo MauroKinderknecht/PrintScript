@@ -26,7 +26,7 @@ class ParserImpl: Parser {
 
     private fun buildTree(tree: ASTTree, consumer: TokenConsumer): ASTTree {
         if (consumer.peek(TokenTypes.EOF) != null) return tree;
-        else parseStatement(consumer);
+        else return parseStatement(consumer);
     }
 
     private fun parseStatement(consumer: TokenConsumer): ASTTree {

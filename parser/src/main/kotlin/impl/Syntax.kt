@@ -1,4 +1,0 @@
-package impl
-
-class Syntax {
-}

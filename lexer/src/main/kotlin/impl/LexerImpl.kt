@@ -6,10 +6,7 @@ import interfaces.Lexer
 import interfaces.LexerMatcher
 import org.austral.ingsis.printscript.common.LexicalRange
 import org.austral.ingsis.printscript.common.Token
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.util.EnumMap
-import java.util.stream.Collectors
 
 class LexerImpl : Lexer {
 
@@ -46,10 +43,8 @@ class LexerImpl : Lexer {
         matchers[TokenTypes.SEMICOLON] = LexerMatcherImpl(TokenTypes.SEMICOLON, "[;]")
     }
 
-    override fun lex(source: InputStreamReader): List<Token> {
-        val matcher = LexerMatcherImpl(matchers.values.toList()).getMatcher(
-            BufferedReader(source).lines().collect(Collectors.joining("\n"))
-        )
+    override fun lex(source: String): List<Token> {
+        val matcher = LexerMatcherImpl(matchers.values.toList()).getMatcher(source)
         val tokens: MutableList<Token> = emptyList<Token>().toMutableList()
         var line = 0
         var position = 0
@@ -87,7 +82,6 @@ class LexerImpl : Lexer {
             position,
             LexicalRange(column, line, column, line)
         )
-        // tokens.map { token -> println(token) }
         return tokens
     }
 }

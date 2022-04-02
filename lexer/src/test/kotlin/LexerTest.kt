@@ -14,62 +14,62 @@ class LexerTest {
 
     @Test
     fun stringDeclarationTest() {
-        val tokens = lexer.lex(toInputStreamReader("let a: String;"))
+        val tokens = lexer.lex("let a: String;")
         val expected = File("./src/test/kotlin/testLexer/testLexer1.txt").readText()
         assertEquals(tokens.toString(), expected)
     }
 
     @Test
     fun stringDoubleQuoteAssignationTest() {
-        val tokens = lexer.lex(toInputStreamReader("a = \"This is a test!\";"))
+        val tokens = lexer.lex("a = \"This is a test!\";")
         assertEquals(7, tokens.size)
     }
 
     @Test
     fun stringSingleQuoteAssignationTest() {
-        val tokens = lexer.lex(toInputStreamReader("a = \'This is a test!\';"))
+        val tokens = lexer.lex("a = \'This is a test!\';")
         assertEquals(7, tokens.size)
     }
 
     @Test
     fun stringDeclarationAssignationTest() {
-        val tokens = lexer.lex(toInputStreamReader("let a: String = \"This is a test!\";"))
+        val tokens = lexer.lex("let a: String = \"This is a test!\";")
         assertEquals(12, tokens.size)
     }
 
     @Test
     fun numberDeclarationTest() {
-        val tokens = lexer.lex(toInputStreamReader("let a: Number;"))
+        val tokens = lexer.lex("let a: Number;")
         assertEquals(8, tokens.size)
     }
 
     @Test
     fun numberIntegerAssignationTest() {
-        val tokens = lexer.lex(toInputStreamReader("a = 2;"))
+        val tokens = lexer.lex("a = 2;")
         assertEquals(7, tokens.size)
     }
 
     @Test
     fun numberDeclarationAssignationTest() {
-        val tokens = lexer.lex(toInputStreamReader("let a: String = 2.123;"))
+        val tokens = lexer.lex("let a: String = 2.123;")
         assertEquals(12, tokens.size)
     }
 
     @Test
     fun printStringTest() {
-        val tokens = lexer.lex(toInputStreamReader("println(\"This is a test!\");"))
+        val tokens = lexer.lex("println(\"This is a test!\");")
         assertEquals(6, tokens.size)
     }
 
     @Test
     fun printNumberTest() {
-        val tokens = lexer.lex(toInputStreamReader("println(1.123);"))
+        val tokens = lexer.lex("println(1.123);")
         assertEquals(6, tokens.size)
     }
 
     @Test
     fun newLineTest() {
-        val tokens = lexer.lex(toInputStreamReader("a = 1.123;\nb = \"Hello\";"))
+        val tokens = lexer.lex("a = 1.123;\nb = \"Hello\";")
         val expected = File("./src/test/kotlin/testLexer/testNewLine.tokens.txt").readText()
         assertEquals(tokens.toString(), expected)
     }

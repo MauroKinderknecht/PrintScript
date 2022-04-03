@@ -1,15 +1,15 @@
 package impl
 
-import impl.enums.TokenTypes
 import data.ASTTree
 import data.ASTTree.Companion.emptyTree
+import impl.enums.TokenTypes
 import interfaces.Parser
 import interfaces.Syntax
 import org.austral.ingsis.printscript.common.Token
 import org.austral.ingsis.printscript.common.TokenConsumer
 import org.austral.ingsis.printscript.parser.TokenIterator
 
-class ParserImpl: Parser {
+class ParserImpl : Parser {
 
     private var syntaxes: List<Syntax> = emptyList()
 
@@ -25,8 +25,8 @@ class ParserImpl: Parser {
     }
 
     private fun buildTree(tree: ASTTree, consumer: TokenConsumer): ASTTree {
-        if (consumer.peek(TokenTypes.EOF) != null) return tree;
-        else return parseStatement(consumer);
+        if (consumer.peek(TokenTypes.EOF) != null) return tree
+        else return parseStatement(consumer)
     }
 
     private fun parseStatement(consumer: TokenConsumer): ASTTree {

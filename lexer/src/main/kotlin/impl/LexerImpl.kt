@@ -67,7 +67,7 @@ class LexerImpl : Lexer {
                 .filter { tokenType ->
                     matcher.group(tokenType.type) != null
                 }.findFirst().map { tokenType ->
-                    if (tokenType == TokenTypes.NOMATCH) throw LexerException("Unexpected token at ${line}:${column}")
+                    if (tokenType == TokenTypes.NOMATCH) throw LexerException("Unexpected token at $line:$column")
 
                     val endColumn = if (tokenType == TokenTypes.EOL) 0 else column + match.length
                     val endLine = if (tokenType == TokenTypes.EOL) line + 1 else line
@@ -80,7 +80,7 @@ class LexerImpl : Lexer {
                     position = endPos
 
                     token
-                }.orElseThrow { LexerException("Unexpected token at ${line}:${column}") }
+                }.orElseThrow { LexerException("Unexpected token at $line:$column") }
 
             tokens += matched
         }

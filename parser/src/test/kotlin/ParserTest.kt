@@ -1,9 +1,7 @@
-import fixtures.*
+
 import impl.ParserImpl
 import interfaces.Parser
 import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class ParserTest {
 

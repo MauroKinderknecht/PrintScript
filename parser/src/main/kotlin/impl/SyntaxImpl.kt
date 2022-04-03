@@ -1,4 +1,3 @@
 package impl
 
-class SyntaxImpl {
-}
+class SyntaxImpl

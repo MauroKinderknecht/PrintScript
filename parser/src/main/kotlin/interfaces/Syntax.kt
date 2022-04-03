@@ -1,4 +1,3 @@
 package interfaces
 
-interface Syntax {
-}
+interface Syntax

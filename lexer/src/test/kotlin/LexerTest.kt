@@ -1,4 +1,5 @@
 import exception.LexerException
+import fixtures.*
 import impl.LexerImpl
 import impl.enums.TokenTypes
 import interfaces.Lexer

@@ -1,5 +1,4 @@
 import exception.LexerException
-import fixtures.*
 import impl.LexerImpl
 import impl.enums.TokenTypes
 import interfaces.Lexer
@@ -9,7 +8,7 @@ import kotlin.test.assertFailsWith
 
 class LexerTest {
 
-    private val lexer: Lexer = LexerImpl()
+    private val lexer: Lexer = LexerImpl(  )
 
     // Valid syntaxes tests
 

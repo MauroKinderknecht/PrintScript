@@ -4,7 +4,7 @@ import impl.enums.TokenTypes
 import interfaces.SyntaxElement
 import org.austral.ingsis.printscript.common.TokenType
 
-enum class SyntaxElements(override val types: List<TokenType>): SyntaxElement {
+enum class SyntaxElements(override val types: List<TokenType>) : SyntaxElement {
 
     TYPE(listOf(TokenTypes.TYPESTRING, TokenTypes.TYPENUMBER)),
 
@@ -33,6 +33,4 @@ enum class SyntaxElements(override val types: List<TokenType>): SyntaxElement {
     NOTUSEFUL(listOf(TokenTypes.EOL, TokenTypes.WHITESPACE)),
 
     END(listOf(TokenTypes.SEMICOLON))
-
-
 }

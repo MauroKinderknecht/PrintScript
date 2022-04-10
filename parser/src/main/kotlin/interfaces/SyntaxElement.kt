@@ -9,5 +9,4 @@ interface SyntaxElement {
     fun contains(type: TokenType): Boolean = type in types
 
     fun get(): Array<TokenType> = types.toTypedArray()
-
 }

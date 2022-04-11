@@ -1,7 +1,7 @@
 package impl
 
+import enums.TokenTypes
 import exception.LexerException
-import impl.enums.TokenTypes
 import interfaces.Lexer
 import interfaces.LexerMatcher
 import org.austral.ingsis.printscript.common.LexicalRange
@@ -9,7 +9,7 @@ import org.austral.ingsis.printscript.common.Token
 import java.util.EnumMap
 import java.util.regex.Matcher
 
-class LexerImpl : Lexer {
+class LexerImpl() : Lexer {
 
     private var matchers: EnumMap<TokenTypes, LexerMatcher> = EnumMap(TokenTypes::class.java)
 
@@ -63,10 +63,9 @@ class LexerImpl : Lexer {
             val match = matcher.group()
 
             // Check matches with tokens
-            val matched: Token = matchers.keys.stream()
-                .filter { tokenType ->
-                    matcher.group(tokenType.type) != null
-                }.findFirst().map { tokenType ->
+            val matched: Token = matchers.keys
+                .filter { tokenType -> matcher.group(tokenType.type) != null }
+                .map { tokenType ->
                     if (tokenType == TokenTypes.NOMATCH) throw LexerException("Unexpected token at $line:$column")
 
                     val endColumn = if (tokenType == TokenTypes.EOL) 0 else column + match.length
@@ -80,7 +79,7 @@ class LexerImpl : Lexer {
                     position = endPos
 
                     token
-                }.orElseThrow { LexerException("Unexpected token at $line:$column") }
+                }.first()
 
             tokens += matched
         }

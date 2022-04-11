@@ -1,6 +1,5 @@
 package enums
 
-import impl.enums.TokenTypes
 import interfaces.SyntaxElement
 import org.austral.ingsis.printscript.common.TokenType
 
@@ -22,11 +21,9 @@ enum class SyntaxElements(override val types: List<TokenType>) : SyntaxElement {
 
     TYPEASSIGNMENT(listOf(TokenTypes.COLON)),
 
-    FUNCTIONCALL(listOf(TokenTypes.PRINTLN)),
+    PRINTLN(listOf(TokenTypes.PRINTLN)),
 
-    STRING(listOf(TokenTypes.STRING)),
-
-    NUMBER(listOf(TokenTypes.NUMBER)),
+    LITERAL(listOf(TokenTypes.STRING, TokenTypes.NUMBER)),
 
     EOF(listOf(TokenTypes.EOF)),
 

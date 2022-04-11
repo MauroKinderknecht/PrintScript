@@ -20,6 +20,18 @@ dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
 
+compileKotlin {
+    kotlinOptions.jvmTarget = "14"
+}
+
+kotlinter {
+    disabledRules = ["no-wildcard-imports"]
+}
+
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('check') {
+    dependsOn 'installKotlinterPrePushHook'
 }

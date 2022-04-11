@@ -1,7 +1,7 @@
+import enums.TokenTypes
 import exception.LexerException
 import fixtures.*
 import impl.LexerImpl
-import impl.enums.TokenTypes
 import interfaces.Lexer
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -1,6 +1,6 @@
 package fixtures
 
-import impl.enums.TokenTypes
+import enums.TokenTypes
 import org.austral.ingsis.printscript.common.LexicalRange
 import org.austral.ingsis.printscript.common.Token
 

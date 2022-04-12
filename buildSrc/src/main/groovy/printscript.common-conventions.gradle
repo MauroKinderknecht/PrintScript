@@ -25,7 +25,7 @@ compileKotlin {
 }
 
 kotlinter {
-    disabledRules = ["no-wildcard-imports"]
+    disabledRules = ["no-wildcard-imports","no-unused-imports"]
 }
 
 tasks.named('test') {

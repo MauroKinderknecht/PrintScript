@@ -1,4 +1,5 @@
 
+import fixtures.*
 import impl.ParserImpl
 import interfaces.Parser
 import kotlin.test.Test

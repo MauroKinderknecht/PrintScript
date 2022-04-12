@@ -1,5 +1,3 @@
-/*
-
 import fixtures.*
 import impl.*
 import interfaces.Parser
@@ -11,7 +9,14 @@ class ParserTest {
     private val parser: Parser
 
     init {
-        val expressions = listOf(UnaryExpression::class, BinaryExpression::class)
+        val expressions = listOf(
+            IdentifierExpression::class,
+            LiteralExpression::class,
+            UnaryExpression::class,
+            // BinaryExpression::class,
+            ComplexBinaryExpression::class,
+            // ParenthesisExpression::class
+        )
         val statements = listOf(
             DeclarationStatement::class,
             AssignationStatement::class,
@@ -206,4 +211,3 @@ class ParserTest {
         assertEquals(ast, tree.toString())
     }
 }
-*/

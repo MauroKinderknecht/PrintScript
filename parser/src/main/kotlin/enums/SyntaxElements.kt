@@ -9,11 +9,9 @@ enum class SyntaxElements(override val types: List<TokenType>) : SyntaxElement {
 
     VARIABLE(listOf(TokenTypes.LET)),
 
-    OPERATION(listOf(TokenTypes.PLUS, TokenTypes.MINUS, TokenTypes.TIMES, TokenTypes.DIVIDEDBY)),
+    BINARYOPERATION(listOf(TokenTypes.PLUS, TokenTypes.MINUS, TokenTypes.TIMES, TokenTypes.DIVIDEDBY)),
 
-    OPENPAREN(listOf(TokenTypes.OPENPAREN)),
-
-    CLOSEPAREN(listOf(TokenTypes.CLOSEPAREN)),
+    UNARYOPERATION(listOf(TokenTypes.MINUS)),
 
     IDENTIFIER(listOf(TokenTypes.IDENTIFIER)),
 

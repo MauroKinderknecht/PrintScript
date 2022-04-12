@@ -2,6 +2,7 @@ package impl
 
 import data.*
 import enums.SyntaxElements
+import enums.TokenTypes
 import interfaces.Syntax
 import interfaces.SyntaxMatcher
 import org.austral.ingsis.printscript.parser.Content
@@ -81,9 +82,9 @@ class FunctionStatement(matcher: StatementMatcher) : Statement(matcher) {
         if (content.size < 4) return null
 
         val function = if (SyntaxElements.FUNCTION.contains(content[0].token.type)) content[0] else null
-        val open = if (SyntaxElements.OPENPAREN.contains(content[1].token.type)) content[1] else null
+        val open = if (content[1].token.type == TokenTypes.OPENPAREN) content[1] else null
         val expression = matcher.matchExpression(content.subList(2, content.size - 1))
-        val close = if (SyntaxElements.CLOSEPAREN.contains(content[content.size - 1].token.type)) content[content.size - 1] else null
+        val close = if (content[content.size - 1].token.type == TokenTypes.CLOSEPAREN) content[content.size - 1] else null
 
         return if (function != null && open != null && expression != null && close != null)
             FunctionAST(function, expression)

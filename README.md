@@ -35,44 +35,9 @@ Then we need to execute the line below
 chmod +x .git/hooks/pre-commit
 ```
 
-
-
-TODO add to buildSrc
-```
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jmailen.gradle.kotlinter.tasks.*
-
-plugins {
-    
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
-}
-
-tasks.register<LintTask>("ktLint") {
-    group = "verification"
-    source(files("src"))
-    reports.set(
-        mapOf(
-            "plain" to file("build/lint-report.txt"),
-            "json" to file("build/lint-report.json")
-        )
-    )
-}
-
-tasks.register<FormatTask>("ktFormat") {
-    group = "formatting"
-    source(files("src"))
-    report.set(file("build/format-report.txt"))
-}
-
-tasks.withType<GradleBuild> {
-    dependsOn("ktFormat")
-    dependsOn("ktLint")
-}
-```
+## Known bugs
+- Que una keyword sea una keyword "letVar" deberia ser un Identifier y matchea a 2 tokens Let y Identifier
+- Que el parser se banque operaciones compuestas y orden de precedencia
+- Code coverage en los test
+- Tests para el interpreter y el cli
+- Las expresiones complejas no funcionan consistentemente

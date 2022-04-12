@@ -179,11 +179,15 @@ val ast_016 = ProgramAST(
 val ast_017 = ProgramAST(
     children = listOf(
         AssignationAST(
-            lhs = VariableAST(variable = Content(content = "a", token = tokens_016[0])),
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_017[0])),
             expression = BinaryExpressionAST(
-                left = IdentifierAST(identifier = Content(content = "b", token = tokens_016[4])),
-                operation = Content(content = "+", token = tokens_016[6]),
-                right = IdentifierAST(identifier = Content(content = "c", token = tokens_016[8]))
+                left = BinaryExpressionAST(
+                    left = LiteralAST(literal = Content(content = "2", token = tokens_017[5])),
+                    operation = Content(content = "+", token = tokens_017[7]),
+                    right = LiteralAST(literal = Content(content = "3", token = tokens_017[9]))
+                ),
+                operation = Content(content = "*", token = tokens_017[12]),
+                right = IdentifierAST(identifier = Content(content = "b", token = tokens_017[14]))
             )
         ),
     )
@@ -220,11 +224,15 @@ val ast_019 = ProgramAST(
 val ast_020 = ProgramAST(
     children = listOf(
         AssignationAST(
-            lhs = VariableAST(variable = Content(content = "a", token = tokens_016[0])),
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_020[0])),
             expression = BinaryExpressionAST(
-                left = IdentifierAST(identifier = Content(content = "b", token = tokens_016[4])),
-                operation = Content(content = "+", token = tokens_016[6]),
-                right = IdentifierAST(identifier = Content(content = "c", token = tokens_016[8]))
+                left = IdentifierAST(identifier = Content(content = "b", token = tokens_020[4])),
+                operation = Content(content = "-", token = tokens_020[6]),
+                right = BinaryExpressionAST(
+                    left = IdentifierAST(identifier = Content(content = "3", token = tokens_020[9])),
+                    operation = Content(content = "/", token = tokens_020[11]),
+                    right = IdentifierAST(identifier = Content(content = "1", token = tokens_020[13]))
+                )
             )
         ),
     )

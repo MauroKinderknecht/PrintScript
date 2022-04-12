@@ -5,32 +5,24 @@ import enums.SyntaxElements
 import interfaces.Syntax
 import interfaces.SyntaxMatcher
 import org.austral.ingsis.printscript.parser.Content
+import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
 
-abstract class Statement : Syntax {
+abstract class Statement(val matcher: StatementMatcher) : Syntax
 
-    fun parseExpression(content: List<Content<String>>): AST? {
-        return ExpressionMatcher().match(content)
-    }
-}
+class StatementMatcher(matchers: List<KClass<out Statement>>, private val expressionMatcher: ExpressionMatcher): SyntaxMatcher {
 
-class StatementMatcher : SyntaxMatcher {
-
-    private var statements: MutableList<Statement> = emptyList<Statement>().toMutableList()
-
-    init {
-        statements.add(DeclarationStatement())
-        statements.add(AssignationStatement())
-        statements.add(DeclarationAssignationStatement())
-        statements.add(PrintlnStatement())
-    }
+    private var statements: List<Statement> = matchers.mapNotNull { e -> e.primaryConstructor?.call(this) }
 
     // return first not null parsed ast
     override fun match(content: List<Content<String>>): AST? =
         statements.firstNotNullOfOrNull { statement -> statement.parse(content) }
+
+    fun matchExpression(content: List<Content<String>>): AST? = expressionMatcher.match(content)
 }
 
 // (variable) (identifier) (type_assignment) (type) (end)
-class DeclarationStatement : Statement() {
+class DeclarationStatement(matcher: StatementMatcher) : Statement(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
         if (content.size != 4) return null
 
@@ -46,22 +38,22 @@ class DeclarationStatement : Statement() {
 }
 
 // (identifier) (assignment) (expression)
-class AssignationStatement : Statement() {
+class AssignationStatement(matcher: StatementMatcher) : Statement(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
         if (content.size < 3) return null
 
         val identifier = if (SyntaxElements.IDENTIFIER.contains(content[0].token.type)) content[0] else null
         val assignment = if (SyntaxElements.ASSIGNMENT.contains(content[1].token.type)) content[1] else null
-        val expression = parseExpression(content.subList(2, content.size))
+        val expression = matcher.matchExpression(content.subList(2, content.size))
 
         return if (identifier != null && assignment != null && expression != null)
-            AssignationAST(IdentifierAST(identifier), expression)
+            AssignationAST(VariableAST(identifier), expression)
         else null
     }
 }
 
 // (variable) (identifier) (type_assignment) (type) (assignment) (expression)
-class DeclarationAssignationStatement : Statement() {
+class DeclarationAssignationStatement(matcher: StatementMatcher) : Statement(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
         if (content.size < 6) return null
 
@@ -70,7 +62,7 @@ class DeclarationAssignationStatement : Statement() {
         val colon = if (SyntaxElements.TYPEASSIGNMENT.contains(content[2].token.type)) content[2] else null
         val type = if (SyntaxElements.TYPE.contains(content[3].token.type)) content[3] else null
         val assignment = if (SyntaxElements.ASSIGNMENT.contains(content[4].token.type)) content[4] else null
-        val expression = parseExpression(content.subList(5, content.size))
+        val expression = matcher.matchExpression(content.subList(5, content.size))
 
         return if (variable != null && identifier != null && colon != null && type != null &&
             assignment != null && expression != null
@@ -84,17 +76,17 @@ class DeclarationAssignationStatement : Statement() {
 }
 
 // (println) ( ( ) (expression) ( ) )
-class PrintlnStatement : Statement() {
+class FunctionStatement(matcher: StatementMatcher) : Statement(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
         if (content.size < 4) return null
 
-        val println = if (SyntaxElements.PRINTLN.contains(content[0].token.type)) content[0] else null
+        val function = if (SyntaxElements.FUNCTION.contains(content[0].token.type)) content[0] else null
         val open = if (SyntaxElements.OPENPAREN.contains(content[1].token.type)) content[1] else null
-        val expression = parseExpression(content.subList(2, content.size - 1))
+        val expression = matcher.matchExpression(content.subList(2, content.size - 1))
         val close = if (SyntaxElements.CLOSEPAREN.contains(content[content.size - 1].token.type)) content[content.size - 1] else null
 
-        return if (println != null && open != null && expression != null && close != null)
-            PrintlnAST(expression)
+        return if (function != null && open != null && expression != null && close != null)
+            FunctionAST(function, expression)
         else null
     }
 }

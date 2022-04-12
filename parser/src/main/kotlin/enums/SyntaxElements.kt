@@ -21,7 +21,7 @@ enum class SyntaxElements(override val types: List<TokenType>) : SyntaxElement {
 
     TYPEASSIGNMENT(listOf(TokenTypes.COLON)),
 
-    PRINTLN(listOf(TokenTypes.PRINTLN)),
+    FUNCTION(listOf(TokenTypes.PRINTLN)),
 
     LITERAL(listOf(TokenTypes.STRING, TokenTypes.NUMBER)),
 

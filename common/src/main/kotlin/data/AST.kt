@@ -1,28 +1,70 @@
 package data
 
-import enums.ASTType
+import interfaces.ASTVisitor
 import org.austral.ingsis.printscript.parser.Content
 
 // Head AST
 
-open class AST(name: ASTType)
+abstract class AST() {
+    abstract fun accept(visitor: ASTVisitor)
+}
 
 // AST subtypes (to enforce correct structuring)
 
-data class ProgramAST(private var children: List<AST> = emptyList<AST>().toMutableList()) : AST(ASTType.PROGRAM) {
+data class ProgramAST(var children: List<AST> = emptyList<AST>().toMutableList()) : AST() {
     fun add(statement: AST) {
         children = children + statement
     }
+
+    override fun accept(visitor: ASTVisitor) {
+        visitor.visit(this)
+    }
 }
 
-data class DeclarationAST(val variable: Content<String>, val identifier: Content<String>, val type: Content<String>) : AST(ASTType.DECLARATION)
+data class DeclarationAST(val variable: Content<String>, val identifier: Content<String>, val type: Content<String>) : AST() {
+    override fun accept(visitor: ASTVisitor) {
+        visitor.visit(this)
+    }
+}
 
-data class IdentifierAST(val identifier: Content<String>) : AST(ASTType.IDENTIFIER)
+data class VariableAST(val variable: Content<String>) : AST() {
+    override fun accept(visitor: ASTVisitor) {
+        visitor.visit(this)
+    }
+}
 
-data class AssignationAST(val lhs: AST, val expression: AST) : AST(ASTType.ASSIGNATION)
+data class IdentifierAST(val identifier: Content<String>) : AST() {
+    override fun accept(visitor: ASTVisitor) {
+        visitor.visit(this)
+    }
+}
 
-data class PrintlnAST(val expression: AST) : AST(ASTType.PRINT)
+data class AssignationAST(val lhs: AST, val expression: AST) : AST() {
+    override fun accept(visitor: ASTVisitor) {
+        visitor.visit(this)
+    }
+}
 
-data class LiteralAST(val literal: Content<String>) : AST(ASTType.LITERAL)
+data class FunctionAST(val function: Content<String>, val expression: AST) : AST() {
+    override fun accept(visitor: ASTVisitor) {
+        visitor.visit(this)
+    }
+}
 
-data class ExpressionAST(val left: AST, val operation: Content<String>, val right: AST) : AST(ASTType.EXPRESSION)
+data class LiteralAST(val literal: Content<String>) : AST() {
+    override fun accept(visitor: ASTVisitor) {
+        visitor.visit(this)
+    }
+}
+
+data class BinaryExpressionAST(val left: AST, val operation: Content<String>, val right: AST) : AST() {
+    override fun accept(visitor: ASTVisitor) {
+        visitor.visit(this)
+    }
+}
+
+data class UnaryExpressionAST(val operation: Content<String>, val right: AST) : AST() {
+    override fun accept(visitor: ASTVisitor) {
+        visitor.visit(this)
+    }
+}

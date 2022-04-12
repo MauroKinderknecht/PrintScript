@@ -1,31 +1,28 @@
 package impl
 
 import data.AST
-import data.ExpressionAST
+import data.BinaryExpressionAST
 import data.IdentifierAST
 import data.LiteralAST
 import enums.SyntaxElements
 import interfaces.Syntax
 import interfaces.SyntaxMatcher
 import org.austral.ingsis.printscript.parser.Content
+import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
 
-abstract class Expression() : Syntax
+abstract class Expression(val matcher: ExpressionMatcher) : Syntax
 
-class ExpressionMatcher : SyntaxMatcher {
+class ExpressionMatcher(matchers: List<KClass<out Expression>>) : SyntaxMatcher {
 
-    private var expressions: MutableList<Expression> = emptyList<Expression>().toMutableList()
-
-    init {
-        expressions.add(UnaryExpression(this))
-        expressions.add(BinaryExpression(this))
-    }
+    private val expressions: List<Expression> = matchers.mapNotNull { e -> e.primaryConstructor?.call(this) }
 
     override fun match(content: List<Content<String>>): AST? =
         expressions.firstNotNullOfOrNull { expression -> expression.parse(content) }
 }
 
 // (identifier | literal)
-class UnaryExpression(private val matcher: ExpressionMatcher) : Expression() {
+class UnaryExpression(matcher: ExpressionMatcher) : Expression(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
         if (content.size != 1) return null
 
@@ -39,7 +36,7 @@ class UnaryExpression(private val matcher: ExpressionMatcher) : Expression() {
 }
 
 // (identifier | expression) (operation) (identifier | expression)
-class BinaryExpression(private val matcher: ExpressionMatcher) : Expression() {
+class BinaryExpression(matcher: ExpressionMatcher) : Expression(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
         if (content.size < 3) return null
 
@@ -48,7 +45,7 @@ class BinaryExpression(private val matcher: ExpressionMatcher) : Expression() {
         val operation = if (SyntaxElements.OPERATION.contains(content[1].token.type)) content[1] else null
         val right = matcher.match(listOf(content[2]))
 
-        return if (left != null && operation != null && right != null) ExpressionAST(left, operation, right)
+        return if (left != null && operation != null && right != null) BinaryExpressionAST(left, operation, right)
         else null
     }
 }

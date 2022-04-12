@@ -16,7 +16,7 @@ val ast_001 = ProgramAST(
 val ast_002 = ProgramAST(
     children = listOf(
         AssignationAST(
-            lhs = IdentifierAST(identifier = Content(content = "a", token = tokens_002[0])),
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_002[0])),
             expression = LiteralAST(literal = Content(content = "\"This is a test!\"", token = tokens_002[4]))
         )
     )
@@ -25,7 +25,7 @@ val ast_002 = ProgramAST(
 val ast_003 = ProgramAST(
     children = listOf(
         AssignationAST(
-            lhs = IdentifierAST(identifier = Content(content = "a", token = tokens_003[0])),
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_003[0])),
             expression = LiteralAST(literal = Content(content = "\'This is a test!\'", token = tokens_003[4]))
         )
     )
@@ -57,7 +57,7 @@ val ast_005 = ProgramAST(
 val ast_006 = ProgramAST(
     children = listOf(
         AssignationAST(
-            lhs = IdentifierAST(identifier = Content(content = "a", token = tokens_006[0])),
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_006[0])),
             expression = LiteralAST(literal = Content(content = "2", token = tokens_006[4]))
         )
     )
@@ -78,24 +78,24 @@ val ast_007 = ProgramAST(
 
 val ast_008 = ProgramAST(
     children = listOf(
-        PrintlnAST(LiteralAST(literal = Content(content = "\"This is a test!\"", token = tokens_008[2])))
+        FunctionAST(function=Content(content = "println", tokens_009[0]), LiteralAST(literal = Content(content = "\"This is a test!\"", token = tokens_008[2])))
     )
 )
 
 val ast_009 = ProgramAST(
     children = listOf(
-        PrintlnAST(LiteralAST(literal = Content(content = "1.123", token = tokens_009[2])))
+        FunctionAST(function=Content(content = "println", tokens_009[0]), LiteralAST(literal = Content(content = "1.123", token = tokens_009[2])))
     )
 )
 
 val ast_010 = ProgramAST(
     children = listOf(
         AssignationAST(
-            lhs = IdentifierAST(identifier = Content(content = "a", token = tokens_010[0])),
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_010[0])),
             expression = LiteralAST(literal = Content(content = "1.123", token = tokens_010[4]))
         ),
         AssignationAST(
-            lhs = IdentifierAST(identifier = Content(content = "b", token = tokens_010[7])),
+            lhs = VariableAST(variable = Content(content = "b", token = tokens_010[7])),
             expression = LiteralAST(literal = Content(content = "\"Hello\"", token = tokens_010[11]))
         ),
     )
@@ -104,8 +104,8 @@ val ast_010 = ProgramAST(
 val ast_011 = ProgramAST(
     children = listOf(
         AssignationAST(
-            lhs = IdentifierAST(identifier = Content(content = "a", token = tokens_011[0])),
-            expression = ExpressionAST(
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_011[0])),
+            expression = BinaryExpressionAST(
                 left = LiteralAST(literal = Content(content = "2", token = tokens_011[4])),
                 operation = Content(content = "+", token = tokens_011[6]),
                 right = LiteralAST(literal = Content(content = "3", token = tokens_011[8]))
@@ -117,8 +117,8 @@ val ast_011 = ProgramAST(
 val ast_012 = ProgramAST(
     children = listOf(
         AssignationAST(
-            lhs = IdentifierAST(identifier = Content(content = "a", token = tokens_012[0])),
-            expression = ExpressionAST(
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_012[0])),
+            expression = BinaryExpressionAST(
                 left = LiteralAST(literal = Content(content = "2", token = tokens_012[4])),
                 operation = Content(content = "-", token = tokens_012[6]),
                 right = LiteralAST(literal = Content(content = "3", token = tokens_012[8]))
@@ -130,8 +130,8 @@ val ast_012 = ProgramAST(
 val ast_013 = ProgramAST(
     children = listOf(
         AssignationAST(
-            lhs = IdentifierAST(identifier = Content(content = "a", token = tokens_013[0])),
-            expression = ExpressionAST(
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_013[0])),
+            expression = BinaryExpressionAST(
                 left = LiteralAST(literal = Content(content = "2", token = tokens_013[4])),
                 operation = Content(content = "*", token = tokens_013[6]),
                 right = LiteralAST(literal = Content(content = "3", token = tokens_013[8]))
@@ -143,8 +143,8 @@ val ast_013 = ProgramAST(
 val ast_014 = ProgramAST(
     children = listOf(
         AssignationAST(
-            lhs = IdentifierAST(identifier = Content(content = "a", token = tokens_014[0])),
-            expression = ExpressionAST(
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_014[0])),
+            expression = BinaryExpressionAST(
                 left = LiteralAST(literal = Content(content = "2", token = tokens_014[4])),
                 operation = Content(content = "/", token = tokens_014[6]),
                 right = LiteralAST(literal = Content(content = "3", token = tokens_014[8]))

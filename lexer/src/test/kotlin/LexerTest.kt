@@ -9,7 +9,7 @@ import kotlin.test.assertFailsWith
 
 class LexerTest {
 
-    private val lexer: Lexer = LexerImpl(   )
+    private val lexer: Lexer = LexerImpl()
 
     // Valid syntaxes tests
 

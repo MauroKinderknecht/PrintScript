@@ -32,6 +32,3 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-tasks.named('check') {
-    dependsOn 'installKotlinterPrePushHook'
-}

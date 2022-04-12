@@ -1,3 +1,11 @@
 plugins {
     id 'printscript.common-conventions'
 }
+
+dependencies {
+    implementation 'com.github.ajalt.clikt:clikt:3.4.0'
+    implementation project(':common')
+    implementation project(':lexer')
+    implementation project(':parser')
+    implementation project(':interpreter')
+}

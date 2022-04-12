@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     implementation 'org.austral.ingsis.printscript:printscript-parser-common:0.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.20"
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
 

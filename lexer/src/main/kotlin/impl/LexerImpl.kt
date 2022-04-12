@@ -46,7 +46,7 @@ class LexerImpl(private var matchers: EnumMap<TokenTypes, LexerMatcher>) : Lexer
                     val endPos = position + match.length
                     val range = LexicalRange(column, line, endColumn, endLine)
 
-                    if (tokenType == TokenTypes.NOMATCH) throw LexerException("Unexpected token at $range")
+                    if (tokenType == TokenTypes.NOMATCH) throw LexerException(range)
                     val token = Token(tokenType, position, endPos, range)
 
                     column = endColumn

@@ -10,8 +10,7 @@ import org.austral.ingsis.printscript.common.TokenConsumer
 import org.austral.ingsis.printscript.parser.Content
 import org.austral.ingsis.printscript.parser.TokenIterator
 
-class ParserImpl : Parser {
-    private val matcher: StatementMatcher = StatementMatcher()
+class ParserImpl(private val matcher: StatementMatcher) : Parser {
 
     override fun parse(source: String, tokens: List<Token>): AST {
         val tokenIterator = TokenIterator.create(source, tokens)

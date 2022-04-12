@@ -152,3 +152,80 @@ val ast_014 = ProgramAST(
         ),
     )
 )
+
+val ast_015 = ProgramAST(
+    children=listOf(
+        AssignationAST(
+            lhs= VariableAST(variable = Content(content="a", token = tokens_015[0])),
+            expression = IdentifierAST(identifier = Content(content = "b", token = tokens_016[4]))
+        )
+    )
+)
+
+val ast_016 = ProgramAST(
+    children = listOf(
+        AssignationAST(
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_016[0])),
+            expression = BinaryExpressionAST(
+                left = IdentifierAST(identifier = Content(content = "b", token = tokens_016[4])),
+                operation = Content(content = "+", token = tokens_016[6]),
+                right = IdentifierAST(identifier = Content(content = "c", token = tokens_016[8]))
+            )
+        ),
+    )
+)
+
+// h
+val ast_017 = ProgramAST(
+    children = listOf(
+        AssignationAST(
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_016[0])),
+            expression = BinaryExpressionAST(
+                left = IdentifierAST(identifier = Content(content = "b", token = tokens_016[4])),
+                operation = Content(content = "+", token = tokens_016[6]),
+                right = IdentifierAST(identifier = Content(content = "c", token = tokens_016[8]))
+            )
+        ),
+    )
+)
+
+val ast_018 = ProgramAST(
+    children = listOf(
+        AssignationAST(
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_011[0])),
+            expression = BinaryExpressionAST(
+                left = LiteralAST(literal = Content(content = "2", token = tokens_011[4])),
+                operation = Content(content = "+", token = tokens_011[6]),
+                right = LiteralAST(literal = Content(content = "3", token = tokens_011[8]))
+            )
+        ),
+    )
+)
+
+// j
+val ast_019 = ProgramAST(
+    children = listOf(
+        AssignationAST(
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_016[0])),
+            expression = BinaryExpressionAST(
+                left = IdentifierAST(identifier = Content(content = "b", token = tokens_016[4])),
+                operation = Content(content = "+", token = tokens_016[6]),
+                right = IdentifierAST(identifier = Content(content = "c", token = tokens_016[8]))
+            )
+        ),
+    )
+)
+
+// h
+val ast_020 = ProgramAST(
+    children = listOf(
+        AssignationAST(
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_016[0])),
+            expression = BinaryExpressionAST(
+                left = IdentifierAST(identifier = Content(content = "b", token = tokens_016[4])),
+                operation = Content(content = "+", token = tokens_016[6]),
+                right = IdentifierAST(identifier = Content(content = "c", token = tokens_016[8]))
+            )
+        ),
+    )
+)

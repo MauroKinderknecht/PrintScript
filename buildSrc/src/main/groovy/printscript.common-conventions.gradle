@@ -52,3 +52,6 @@ publishing {
     }
 }
 
+tasks.named('build') {
+    dependsOn 'lintKotlin'
+}

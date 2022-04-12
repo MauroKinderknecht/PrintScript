@@ -154,9 +154,9 @@ val ast_014 = ProgramAST(
 )
 
 val ast_015 = ProgramAST(
-    children=listOf(
+    children = listOf(
         AssignationAST(
-            lhs= VariableAST(variable = Content(content="a", token = tokens_015[0])),
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_015[0])),
             expression = IdentifierAST(identifier = Content(content = "b", token = tokens_016[4]))
         )
     )

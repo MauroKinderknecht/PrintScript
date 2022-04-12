@@ -1,3 +1,4 @@
+/*
 
 import fixtures.*
 import impl.*
@@ -21,7 +22,7 @@ class ParserTest {
 
         val expressionMatcher = ExpressionMatcher(expressions)
         val statementMatcher = StatementMatcher(statements, expressionMatcher)
-        
+
         parser = ParserImpl(statementMatcher)
     }
 
@@ -205,3 +206,4 @@ class ParserTest {
         assertEquals(ast, tree.toString())
     }
 }
+*/

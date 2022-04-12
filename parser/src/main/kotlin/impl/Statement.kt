@@ -10,7 +10,7 @@ import kotlin.reflect.full.primaryConstructor
 
 abstract class Statement(val matcher: StatementMatcher) : Syntax
 
-class StatementMatcher(matchers: List<KClass<out Statement>>, private val expressionMatcher: ExpressionMatcher): SyntaxMatcher {
+class StatementMatcher(matchers: List<KClass<out Statement>>, private val expressionMatcher: ExpressionMatcher) : SyntaxMatcher {
 
     private var statements: List<Statement> = matchers.mapNotNull { e -> e.primaryConstructor?.call(this) }
 

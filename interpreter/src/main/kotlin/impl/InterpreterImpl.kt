@@ -8,7 +8,7 @@ import interfaces.ASTVisitor
 import interfaces.Interpreter
 import java.util.function.Consumer
 
-class InterpreterImpl(private var emitter: Consumer<String>): Interpreter, ASTVisitor  {
+class InterpreterImpl(private var emitter: Consumer<String>) : Interpreter, ASTVisitor {
 
     private val context = emptyContext()
 
@@ -24,7 +24,7 @@ class InterpreterImpl(private var emitter: Consumer<String>): Interpreter, ASTVi
     private fun isString(str: Any) = str is String
 
     override fun visit(tree: ProgramAST): Any {
-        return tree.children.forEach{ statement ->
+        return tree.children.forEach { statement ->
             eval(statement)
         }
     }
@@ -44,7 +44,7 @@ class InterpreterImpl(private var emitter: Consumer<String>): Interpreter, ASTVi
     override fun visit(tree: FunctionAST): Any {
         val expression = eval(tree.expression)
 
-        return when(tree.function.token.type) {
+        return when (tree.function.token.type) {
             TokenTypes.PRINTLN -> {
                 emitter.accept(expression.toString())
             }
@@ -71,7 +71,7 @@ class InterpreterImpl(private var emitter: Consumer<String>): Interpreter, ASTVi
                     !isNumber(left) && !isString(left) ||
                     !isNumber(right) && !isString(left) ||
                     !isNumber(right) && !isString(right)
-                ) throw  InterpreterException("Expression exprected")
+                ) throw InterpreterException("Expression exprected")
                 return if (isNumber(left)) left as Double + right as Double
                 else left as String + right
             }
@@ -102,5 +102,4 @@ class InterpreterImpl(private var emitter: Consumer<String>): Interpreter, ASTVi
             else -> throw InterpreterException("Expression exprected")
         }
     }
-
 }

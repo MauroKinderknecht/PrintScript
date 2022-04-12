@@ -16,9 +16,8 @@ class Context {
     }
 
     fun create(variable: String, type: String) {
-        environment = environment + Pair(variable, ContextElement(type=type))
+        environment = environment + Pair(variable, ContextElement(type = type))
     }
-
 
     companion object {
         fun emptyContext() = Context()

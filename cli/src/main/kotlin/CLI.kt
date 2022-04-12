@@ -9,8 +9,8 @@ import interfaces.LexerMatcher
 import interfaces.Parser
 import java.util.*
 
-class CLI: CliktCommand() {
-    private val file: String by option(help="File to interpret").prompt("Filename")
+class CLI : CliktCommand() {
+    private val file: String by option(help = "File to interpret").prompt("Filename")
 
     private val matchers: EnumMap<TokenTypes, LexerMatcher> = EnumMap(TokenTypes::class.java)
 
@@ -58,7 +58,7 @@ class CLI: CliktCommand() {
         val interpreter: Interpreter = InterpreterImpl(System.out::println)
 
         val src = "let a: Number = 0;\n" + "println(a);\n" + "a = 20;\n" + "println(a);\n" +
-                "a = a + 50;\n" + "println(a);\n" + "let b: String = \"Hello World\";\n" + "print(b);"
+            "a = a + 50;\n" + "println(a);\n" + "let b: String = \"Hello World\";\n" + "print(b);"
 
         println("Lexing...")
         val tokens = lexer.lex(src)
@@ -68,8 +68,6 @@ class CLI: CliktCommand() {
         val result = interpreter.interpret(ast)
         print(result)
     }
-
-
 }
 
 fun main(args: Array<String>) = CLI().main(args)

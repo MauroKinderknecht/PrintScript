@@ -9,8 +9,8 @@ repositories {
         name = "GitHubPackages"
         url = uri("https://maven.pkg.github.com/austral-ingsis/printscript-parser-common")
         credentials {
-            username = project.findProperty("USER") as String ?: System.getenv("USERNAME")
-            password = project.findProperty("TOKEN") as String ?: System.getenv("TOKEN")
+            username = project.findProperty("GITHUB_ACTOR") as String ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("GITHUB_TOKEN") as String ?: System.getenv("GITHUB_TOKEN")
         }
     }
 }

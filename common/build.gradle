@@ -1,3 +1,5 @@
 plugins {
     id 'printscript.common-conventions'
 }
+
+version "1.0.0-SNAPSHOT"

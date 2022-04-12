@@ -1,7 +1,7 @@
 package interfaces
 
-import data.ASTTree
+import data.AST
 
 interface Interpreter {
-    fun interpret(tree: ASTTree)
+    fun interpret(tree: AST)
 }

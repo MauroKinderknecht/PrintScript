@@ -4,7 +4,6 @@ import interfaces.LexerMatcher
 import org.austral.ingsis.printscript.common.TokenType
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import java.util.stream.Collectors
 
 class LexerMatcherImpl : LexerMatcher {
 
@@ -16,10 +15,9 @@ class LexerMatcherImpl : LexerMatcher {
 
     constructor(matchers: List<LexerMatcher>) {
         pattern = Pattern.compile(
-            matchers.stream().map {
-                    matcher ->
+            matchers.joinToString("|") { matcher ->
                 matcher.getPattern().toString()
-            }.collect(Collectors.joining("|"))
+            }
         )
     }
 

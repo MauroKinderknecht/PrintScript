@@ -1,4 +1,4 @@
-package impl.enums
+package enums
 
 import org.austral.ingsis.printscript.common.TokenType
 

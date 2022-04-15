@@ -7,6 +7,7 @@ import interfaces.Interpreter
 import interfaces.Lexer
 import interfaces.LexerMatcher
 import interfaces.Parser
+import java.io.File
 import java.util.*
 
 class CLI : CliktCommand() {
@@ -41,8 +42,15 @@ class CLI : CliktCommand() {
     }
 
     override fun run() {
-        val exp = listOf(UnaryExpression::class, BinaryExpression::class)
-        val stm = listOf(
+        val expressions = listOf(
+            IdentifierExpression::class,
+            LiteralExpression::class,
+            UnaryExpression::class,
+            AddSubtExpression::class,
+            MultDivExpression::class,
+            ParenthesisExpression::class
+        )
+        val statements = listOf(
             DeclarationStatement::class,
             AssignationStatement::class,
             DeclarationStatement::class,
@@ -50,15 +58,14 @@ class CLI : CliktCommand() {
             FunctionStatement::class
         )
 
-        val expressionMatcher = ExpressionMatcher(exp)
-        val statementMatcher = StatementMatcher(stm, expressionMatcher)
+        val expressionMatcher = ExpressionMatcher(expressions)
+        val statementMatcher = StatementMatcher(statements, expressionMatcher)
 
         val lexer: Lexer = LexerImpl(matchers)
         val parser: Parser = ParserImpl(statementMatcher)
         val interpreter: Interpreter = InterpreterImpl(System.out::println)
 
-        val src = "let a: Number = 0;\n" + "println(a);\n" + "a = 20;\n" + "println(a);\n" +
-            "a = a + 50;\n" + "println(a);\n" + "let b: String = \"Hello World\";\n" + "print(b);"
+        val src = File(file).readText()
 
         println("Lexing...")
         val tokens = lexer.lex(src)

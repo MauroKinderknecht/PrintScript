@@ -98,7 +98,7 @@ class AddSubtExpression(matcher: ExpressionMatcher) : Expression(matcher) {
 }
 
 // ( ( ) (expression) ( ) )
-class ParenthesisExpression(matcher: ExpressionMatcher): Expression(matcher) {
+class ParenthesisExpression(matcher: ExpressionMatcher) : Expression(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
         if (content.size < 3) return null
 
@@ -109,4 +109,4 @@ class ParenthesisExpression(matcher: ExpressionMatcher): Expression(matcher) {
         return if (openParen && closeParen && expression != null) expression
         else null
     }
- }
+}

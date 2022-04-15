@@ -210,13 +210,13 @@ val ast_019 = ProgramAST(
         AssignationAST(
             lhs = VariableAST(variable = Content(content = "a", token = tokens_019[0])),
             expression = BinaryExpressionAST(
-                left =  BinaryExpressionAST(
+                left = BinaryExpressionAST(
                     left = LiteralAST(literal = Content(content = "2", token = tokens_019[5])),
                     operation = Content(content = "+", token = tokens_019[7]),
                     right = LiteralAST(literal = Content(content = "3", token = tokens_019[9]))
                 ),
                 operation = Content(content = "*", token = tokens_019[12]),
-                right =  BinaryExpressionAST(
+                right = BinaryExpressionAST(
                     left = LiteralAST(literal = Content(content = "3", token = tokens_019[15])),
                     operation = Content(content = "*", token = tokens_019[17]),
                     right = LiteralAST(literal = Content(content = "5", token = tokens_019[19]))

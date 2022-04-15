@@ -39,7 +39,7 @@ class ParserImpl(private val matcher: StatementMatcher) : Parser {
         }
         if (consumer.peekAny(*SyntaxElements.END.get()) != null) consumer.consume(consumer.current().type)
         // match with declared statements
-        return matcher.match(content) ?:
-            throw ParserException("Could not match ${content.map { c -> c.content }.reduce{str, c -> str + c}}")
+        return matcher.match(content)
+            ?: throw ParserException("Could not match ${content.map { c -> c.content }.reduce{str, c -> str + c}}")
     }
 }

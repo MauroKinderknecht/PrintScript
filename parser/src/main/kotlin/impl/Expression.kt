@@ -5,33 +5,19 @@ import enums.SyntaxElements
 import enums.TokenTypes
 import interfaces.Syntax
 import interfaces.SyntaxMatcher
-import org.austral.ingsis.printscript.common.TokenType
 import org.austral.ingsis.printscript.parser.Content
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
 abstract class Expression(val matcher: ExpressionMatcher) : Syntax {
-    fun parentedExpressionInterval(content: List<Content<String>>) : Pair<Int, Int>? {
-        var openIdx = findOpen(content)
-        val closeIdx = findClosed(content)
-        return if (openIdx != -1 && closeIdx != -1) {
-            var nextOpenIdx = findOpen(content.subList(openIdx + 1, closeIdx))
-            while (nextOpenIdx != -1) {
-                openIdx = nextOpenIdx
-                nextOpenIdx = findOpen(content.subList(nextOpenIdx + 1, closeIdx))
-            }
-            return if (openIdx < closeIdx) Pair(openIdx, closeIdx)
-            else null
+    fun indexOfOperation(content: List<Content<String>>, syntaxElements: SyntaxElements): Int? {
+        var parens = 0
+        for ((index, element) in content.withIndex()) {
+            if (element.token.type == TokenTypes.OPENPAREN) parens++
+            else if (element.token.type == TokenTypes.CLOSEPAREN) parens--
+            else if (parens == 0 && syntaxElements.contains(element.token.type)) return index
         }
-        else null
-    }
-
-    private fun findOpen(content: List<Content<String>>) = find(content, TokenTypes.OPENPAREN)
-
-    private fun findClosed(content: List<Content<String>>) = find(content, TokenTypes.CLOSEPAREN)
-
-    private fun find(content: List<Content<String>>, type: TokenType): Int {
-        return content.map { c -> c.token.type }.indexOfFirst{ token -> token == type}
+        return null
     }
 }
 
@@ -41,6 +27,9 @@ class ExpressionMatcher(matchers: List<KClass<out Expression>>) : SyntaxMatcher 
 
     override fun match(content: List<Content<String>>): AST? =
         expressions.firstNotNullOfOrNull { expression -> expression.parse(content) }
+
+    fun match(content: List<Content<String>>, without: List<KClass<out Expression>>): AST? =
+        expressions.filter { expression -> !without.contains(expression::class) }.firstNotNullOfOrNull { expression -> expression.parse(content) }
 }
 
 // (identifier)
@@ -67,7 +56,7 @@ class LiteralExpression(matcher: ExpressionMatcher) : Expression(matcher) {
     }
 }
 
-// (operation) (identifier | literal | expression)
+// ( - ) (expression)
 class UnaryExpression(matcher: ExpressionMatcher) : Expression(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
         if (content.size < 2) return null
@@ -78,48 +67,46 @@ class UnaryExpression(matcher: ExpressionMatcher) : Expression(matcher) {
         return if (operation != null && expression != null) UnaryExpressionAST(operation, expression)
         else null
     }
-
 }
 
-// (expression) (operation) (expression)
-class ComplexBinaryExpression(matcher: ExpressionMatcher) : Expression(matcher) {
+// (expression) ( * | / ) (expression)
+class MultDivExpression(matcher: ExpressionMatcher) : Expression(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
         if (content.size < 3) return null
 
-        var left = matcher.match(listOf(content[0]))
-        val opIdx: Int
-        val operation: Content<String>?
-        var right = matcher.match(listOf(content[2]))
+        val operation = indexOfOperation(content, SyntaxElements.MULTDIVOPERATION) ?: return null
+        val left = matcher.match(content.subList(0, operation), listOf(AddSubtExpression::class))
+        val right = matcher.match(content.subList(operation + 1, content.size), listOf(AddSubtExpression::class))
 
-        if (left != null) {
-            opIdx = 1
-            if (right == null) {
-                val (rStart, rEnd) = parentedExpressionInterval(content.subList(opIdx + 1, content.size)) ?: return null
-                right = matcher.match(content.subList(rStart + 1, rEnd))
-            }
-        } else if (right != null) {
-            opIdx = content.size - 2
-            val (lStart, lEnd) = parentedExpressionInterval(content) ?: return null
-            left = matcher.match(content.subList(lStart + 1, lEnd))
-        } else {
-            val (lStart, lEnd) = parentedExpressionInterval(content) ?: return null
-            left = matcher.match(content.subList(lStart + 1, lEnd))
-            opIdx = lEnd + 1
-            if (opIdx == content.size) return null
-            val (rStart, rEnd) = parentedExpressionInterval(content.subList(opIdx + 1, content.size)) ?: return null
-            right = matcher.match(content.subList(rStart + 1, rEnd))
-        }
-
-        operation = if (SyntaxElements.BINARYOPERATION.contains(content[opIdx].token.type)) content[opIdx] else null
-        return if (left != null && operation != null && right != null) BinaryExpressionAST(left, operation, right)
+        return if (left != null && right != null) BinaryExpressionAST(left, content[operation], right)
         else null
     }
 }
 
-//class ParenthesisExpression(matcher: ExpressionMatcher): Expression(matcher) {
-//    override fun parse(content: List<Content<String>>): AST? {
-//        val (start, end) = parentedExpressionInterval(content) ?: return null
-//        return if (start == 0 && end == content.size - 1) matcher.match(content.subList(1, content.size - 1))
-//        else null
-//    }
-//}
+// (expression) ( + | - ) (expression)
+class AddSubtExpression(matcher: ExpressionMatcher) : Expression(matcher) {
+    override fun parse(content: List<Content<String>>): AST? {
+        if (content.size < 3) return null
+
+        val operation = indexOfOperation(content, SyntaxElements.ADDSUBTOPERATION) ?: return null
+        val left = matcher.match(content.subList(0, operation))
+        val right = matcher.match(content.subList(operation + 1, content.size))
+
+        return if (left != null && right != null) BinaryExpressionAST(left, content[operation], right)
+        else null
+    }
+}
+
+// ( ( ) (expression) ( ) )
+class ParenthesisExpression(matcher: ExpressionMatcher): Expression(matcher) {
+    override fun parse(content: List<Content<String>>): AST? {
+        if (content.size < 3) return null
+
+        val openParen = TokenTypes.OPENPAREN == content[0].token.type
+        val expression = matcher.match(content.subList(1, content.size - 1))
+        val closeParen = TokenTypes.CLOSEPAREN == content[content.size - 1].token.type
+
+        return if (openParen && closeParen && expression != null) expression
+        else null
+    }
+ }

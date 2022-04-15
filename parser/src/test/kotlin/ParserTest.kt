@@ -13,9 +13,9 @@ class ParserTest {
             IdentifierExpression::class,
             LiteralExpression::class,
             UnaryExpression::class,
-            // BinaryExpression::class,
-            ComplexBinaryExpression::class,
-            // ParenthesisExpression::class
+            AddSubtExpression::class,
+            MultDivExpression::class,
+            ParenthesisExpression::class
         )
         val statements = listOf(
             DeclarationStatement::class,
@@ -167,7 +167,7 @@ class ParserTest {
     }
 
     @Test
-    fun test016_divisionTest() {
+    fun test016_operationWithVariablesTest() {
         val tokens = tokens_016
         val ast = ast_016.toString()
         val tree = parser.parse(src_016, tokens)
@@ -176,7 +176,7 @@ class ParserTest {
     }
 
     @Test
-    fun test017_divisionTest() {
+    fun test017_leftExpressionWithParensTest() {
         val tokens = tokens_017
         val ast = ast_017.toString()
         val tree = parser.parse(src_017, tokens)
@@ -185,7 +185,7 @@ class ParserTest {
     }
 
     @Test
-    fun test018_divisionTest() {
+    fun test018_oneExpressionWithParensTest() {
         val tokens = tokens_018
         val ast = ast_018.toString()
         val tree = parser.parse(src_018, tokens)
@@ -194,7 +194,7 @@ class ParserTest {
     }
 
     @Test
-    fun test019_divisionTest() {
+    fun test019_bothExpressionsWithParensTest() {
         val tokens = tokens_019
         val ast = ast_019.toString()
         val tree = parser.parse(src_019, tokens)
@@ -203,10 +203,19 @@ class ParserTest {
     }
 
     @Test
-    fun test020_divisionTest() {
+    fun test020_rightExpressionWithParensTest() {
         val tokens = tokens_020
         val ast = ast_020.toString()
         val tree = parser.parse(src_020, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test021_orderOfOperationsTest() {
+        val tokens = tokens_021
+        val ast = ast_021.toString()
+        val tree = parser.parse(src_021, tokens)
 
         assertEquals(ast, tree.toString())
     }

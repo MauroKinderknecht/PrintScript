@@ -1,4 +1,3 @@
 package fixtures
 
-class AST {
-}
+class AST

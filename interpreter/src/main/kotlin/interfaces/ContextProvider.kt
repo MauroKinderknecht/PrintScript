@@ -1,4 +1,3 @@
 package interfaces
 
-interface ContextProvider {
-}
+interface ContextProvider

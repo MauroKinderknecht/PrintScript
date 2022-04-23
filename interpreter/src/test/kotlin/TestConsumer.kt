@@ -1,2 +1,1 @@
-class TestConsumer {
-}
+class TestConsumer

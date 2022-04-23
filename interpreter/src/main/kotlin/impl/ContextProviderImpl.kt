@@ -3,18 +3,18 @@ package impl
 import exception.InterpreterException
 import interfaces.ContextProvider
 
-class Context: ContextProvider {
+class Context : ContextProvider {
 
     private var environment: Map<String, ContextElement> = emptyMap<String, ContextElement>().toMutableMap()
 
     override fun read(variable: String): Any {
-        return environment[variable]?.value ?:
-            throw InterpreterException("INTERPRETER ERROR: Variable $variable is not initialized")
+        return environment[variable]?.value
+            ?: throw InterpreterException("INTERPRETER ERROR: Variable $variable is not initialized")
     }
 
     override fun write(variable: String, value: Any) {
-        val element = environment[variable] ?:
-            throw InterpreterException("INTERPRETER ERROR: Variable $variable is not initialized")
+        val element = environment[variable]
+            ?: throw InterpreterException("INTERPRETER ERROR: Variable $variable is not initialized")
         element.update(value)
     }
 

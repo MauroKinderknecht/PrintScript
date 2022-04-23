@@ -24,7 +24,7 @@ dependencies {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "14"
+    kotlinOptions.jvmTarget = "16"
 }
 
 kotlinter {
@@ -52,3 +52,6 @@ publishing {
     }
 }
 
+tasks.named('build') {
+    dependsOn 'lintKotlin'
+}

@@ -1,12 +1,11 @@
 # PrintScript
 
 ## Get started
-
 Create a `gradle.properties` file containing:
  ```
 kotlin.code.style=official
-gpr.user=<your_github_user>
-gpr.key =<your_github_token>
+GITHUB_ACTOR=<your_github_user>
+GITHUB_TOKEN=<your_github_token>
  ```
 
 ## Pre-commit
@@ -35,44 +34,11 @@ Then we need to execute the line below
 chmod +x .git/hooks/pre-commit
 ```
 
-
-
-TODO add to buildSrc
-```
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jmailen.gradle.kotlinter.tasks.*
-
-plugins {
-    
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
-}
-
-tasks.register<LintTask>("ktLint") {
-    group = "verification"
-    source(files("src"))
-    reports.set(
-        mapOf(
-            "plain" to file("build/lint-report.txt"),
-            "json" to file("build/lint-report.json")
-        )
-    )
-}
-
-tasks.register<FormatTask>("ktFormat") {
-    group = "formatting"
-    source(files("src"))
-    report.set(file("build/format-report.txt"))
-}
-
-tasks.withType<GradleBuild> {
-    dependsOn("ktFormat")
-    dependsOn("ktLint")
-}
-```
+## Known bugs
+- Que una keyword sea una keyword "letVar" deberia ser un Identifier y matchea a 2 tokens Let y Identifier
+- Code coverage en los test
+- También debe poder correr en un modo que solo valide la sintaxis y
+  semántica del archivo. Como argumentos debería poder recibir por lo menos:
+  ● El archivo fuente.
+  ● El modo de ejecución, puede ser interpretación o validación.
+  ● La versión del archivo a interpretar. Opcional. Por ahora solo 1.0.

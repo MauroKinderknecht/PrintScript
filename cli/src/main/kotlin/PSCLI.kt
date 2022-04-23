@@ -1,21 +1,19 @@
-import com.github.ajalt.clikt.core.CliktCommand
-import com.github.ajalt.clikt.parameters.options.option
-import com.github.ajalt.clikt.parameters.options.prompt
+import enums.MenuOption
 import enums.TokenTypes
 import impl.*
-import interfaces.Interpreter
-import interfaces.Lexer
-import interfaces.LexerMatcher
-import interfaces.Parser
-import java.io.File
+import interfaces.*
 import java.util.*
 
-class CLI : CliktCommand() {
-    private val file: String by option(help = "File to interpret").prompt("Filename")
+class CLI {
 
-    private val matchers: EnumMap<TokenTypes, LexerMatcher> = EnumMap(TokenTypes::class.java)
+    private val context: ContextProvider
+    private val lexer: Lexer
+    private val parser: Parser
+    private val interpreter: Interpreter
 
     init {
+        val matchers: EnumMap<TokenTypes, LexerMatcher> = EnumMap(TokenTypes::class.java)
+
         // Keywords
         matchers[TokenTypes.LET] = LexerMatcherImpl(TokenTypes.LET, "let")
         matchers[TokenTypes.PRINTLN] = LexerMatcherImpl(TokenTypes.PRINTLN, "println")
@@ -39,9 +37,7 @@ class CLI : CliktCommand() {
 
         // Variables
         matchers[TokenTypes.IDENTIFIER] = LexerMatcherImpl(TokenTypes.IDENTIFIER, "[_a-zA-Z][_a-zA-Z0-9]*")
-    }
 
-    override fun run() {
         val expressions = listOf(
             IdentifierExpression::class,
             LiteralExpression::class,
@@ -50,6 +46,7 @@ class CLI : CliktCommand() {
             MultDivExpression::class,
             ParenthesisExpression::class
         )
+
         val statements = listOf(
             DeclarationStatement::class,
             AssignationStatement::class,
@@ -61,20 +58,84 @@ class CLI : CliktCommand() {
         val expressionMatcher = ExpressionMatcher(expressions)
         val statementMatcher = StatementMatcher(statements, expressionMatcher)
 
-        val lexer: Lexer = LexerImpl(matchers)
-        val parser: Parser = ParserImpl(statementMatcher)
-        val interpreter: Interpreter = InterpreterImpl(System.out::println)
+        context = ContextProviderImpl()
+        lexer = LexerImpl(matchers)
+        parser = ParserImpl(statementMatcher)
+        interpreter = InterpreterImpl(System.out::println, context)
+    }
 
-        val src = File(file).readText()
-
-        println("Lexing...")
+    private fun interpret(src: String, messages: Boolean) {
+        if (messages) println("Lexing...")
         val tokens = lexer.lex(src)
-        println("Parsing...")
+        if (messages) println("Parsing...")
         val ast = parser.parse(src, tokens)
-        println("Interpreting...")
-        val result = interpreter.interpret(ast)
-        print(result)
+        if (messages) println("Interpreting...")
+        interpreter.interpret(ast)
+    }
+
+    private fun printScript() {
+        println(
+            "██████  ██████  ██ ███    ██ ████████ ███████  ██████ ██████  ██ ██████  ████████ \n" +
+                "██   ██ ██   ██ ██ ████   ██    ██    ██      ██      ██   ██ ██ ██   ██    ██    \n" +
+                "██████  ██████  ██ ██ ██  ██    ██    ███████ ██      ██████  ██ ██████     ██    \n" +
+                "██      ██   ██ ██ ██  ██ ██    ██         ██ ██      ██   ██ ██ ██         ██    \n" +
+                "██      ██   ██ ██ ██   ████    ██    ███████  ██████ ██   ██ ██ ██         ██    \n" +
+                "\n" +
+                "_________________________________________________________________________________ \n" +
+                "\n"
+        )
+    }
+
+    fun run() {
+        printScript()
+        var exit = false
+        while (!exit) {
+            when (menu()) {
+                MenuOption.REPL -> {
+                    repl()
+                    exit = true
+                }
+                MenuOption.FILE -> readFromFile()
+                MenuOption.EXIT -> exit = true
+            }
+        }
+    }
+
+    private fun menu(): MenuOption {
+        println(
+            "Select an option: \n" +
+                "1. REPL \n" +
+                "2. Read from File \n" +
+                "3. Exit \n"
+        )
+
+        return try {
+            when (val option = readln().toInt()) {
+                1 -> MenuOption.REPL
+                2 -> MenuOption.FILE
+                3 -> MenuOption.EXIT
+                else -> {
+                    println("Oops, $option is not a valid option. Please enter a valid option.")
+                    menu()
+                }
+            }
+        } catch (_: java.lang.NumberFormatException) {
+            println("Please enter a number")
+            menu()
+        }
+    }
+
+    private fun repl() {
+        while (true) {
+            print("PrintScript > ")
+            interpret(readln(), false)
+        }
+    }
+
+    private fun readFromFile() {
+        val a = "println('Hello world!')"
+        interpret(a, true)
     }
 }
 
-fun main(args: Array<String>) = CLI().main(args)
+fun main() = CLI().run()

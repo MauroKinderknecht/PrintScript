@@ -1,6 +1,6 @@
 package enums
 
-enum class MenuOptions {
+enum class MenuOption {
     REPL,
     FILE,
     EXIT,

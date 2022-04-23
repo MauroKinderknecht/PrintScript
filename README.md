@@ -1,9 +1,6 @@
 # PrintScript
 
-## For non-developers
-
 ## Get started
-
 Create a `gradle.properties` file containing:
  ```
 kotlin.code.style=official
@@ -39,7 +36,9 @@ chmod +x .git/hooks/pre-commit
 
 ## Known bugs
 - Que una keyword sea una keyword "letVar" deberia ser un Identifier y matchea a 2 tokens Let y Identifier
-- Que el parser se banque operaciones compuestas y orden de precedencia
 - Code coverage en los test
-- Tests para el interpreter y el cli
-- Las expresiones complejas no funcionan consistentemente
+- También debe poder correr en un modo que solo valide la sintaxis y
+  semántica del archivo. Como argumentos debería poder recibir por lo menos:
+  ● El archivo fuente.
+  ● El modo de ejecución, puede ser interpretación o validación.
+  ● La versión del archivo a interpretar. Opcional. Por ahora solo 1.0.

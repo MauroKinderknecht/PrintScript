@@ -1,1 +1,2 @@
-class InterpreterTest
+class InterpreterTest {
+}

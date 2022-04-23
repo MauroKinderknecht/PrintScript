@@ -1,3 +1,4 @@
 package fixtures
 
-class Tokens
+class Tokens {
+}

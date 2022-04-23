@@ -1,3 +1,4 @@
 package fixtures
 
-class Context
+class Context {
+}

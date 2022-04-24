@@ -59,5 +59,4 @@ class PrintScript(private val emitter: Consumer<String>, private val errorHandle
             errorHandler.accept(e.toString())
         }
     }
-
 }

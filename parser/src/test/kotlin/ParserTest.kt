@@ -1,3 +1,4 @@
+import enums.PrintScriptVersion
 import fixtures.*
 import impl.*
 import interfaces.Parser
@@ -9,22 +10,7 @@ class ParserTest {
     private val parser: Parser
 
     init {
-        val expressions = listOf(
-            IdentifierExpression::class,
-            LiteralExpression::class,
-            UnaryExpression::class,
-            AddSubtExpression::class,
-            MultDivExpression::class,
-            ParenthesisExpression::class
-        )
-        val statements = listOf(
-            DeclarationStatement::class,
-            AssignationStatement::class,
-            DeclarationStatement::class,
-            DeclarationAssignationStatement::class,
-            FunctionStatement::class
-        )
-
+        val (statements, expressions) = SyntaxElementsProvider.getExpressionElements(PrintScriptVersion.V1_0)
         val expressionMatcher = ExpressionMatcher(expressions)
         val statementMatcher = StatementMatcher(statements, expressionMatcher)
 

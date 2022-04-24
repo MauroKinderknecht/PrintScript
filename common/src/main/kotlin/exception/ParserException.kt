@@ -1,3 +1,3 @@
 package exception
 
-class ParserException(message: String) : Exception(message)
+class ParserException(message: String) : PrintScriptException(message)

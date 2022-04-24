@@ -1,8 +1,10 @@
+import enums.PrintScriptVersion
 import enums.TokenTypes
 import exception.LexerException
 import fixtures.*
 import impl.LexerImpl
 import impl.LexerMatcherImpl
+import impl.MatcherProvider
 import interfaces.Lexer
 import interfaces.LexerMatcher
 import java.util.*
@@ -15,32 +17,7 @@ class LexerTest {
     private val lexer: Lexer
 
     init {
-        val matchers: EnumMap<TokenTypes, LexerMatcher> = EnumMap(TokenTypes::class.java)
-
-        // Keywords
-        matchers[TokenTypes.LET] = LexerMatcherImpl(TokenTypes.LET, "let")
-        matchers[TokenTypes.PRINTLN] = LexerMatcherImpl(TokenTypes.PRINTLN, "println")
-
-        // Types
-        matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING, "String")
-        matchers[TokenTypes.TYPENUMBER] = LexerMatcherImpl(TokenTypes.TYPENUMBER, "Number")
-
-        // Operations
-        matchers[TokenTypes.PLUS] = LexerMatcherImpl(TokenTypes.PLUS, "[+]")
-        matchers[TokenTypes.MINUS] = LexerMatcherImpl(TokenTypes.MINUS, "[-]")
-        matchers[TokenTypes.TIMES] = LexerMatcherImpl(TokenTypes.TIMES, "[*]")
-        matchers[TokenTypes.DIVIDEDBY] = LexerMatcherImpl(TokenTypes.DIVIDEDBY, "[/]")
-        matchers[TokenTypes.ASSIGNMENT] = LexerMatcherImpl(TokenTypes.ASSIGNMENT, "[=]")
-        matchers[TokenTypes.OPENPAREN] = LexerMatcherImpl(TokenTypes.OPENPAREN, "[(]")
-        matchers[TokenTypes.CLOSEPAREN] = LexerMatcherImpl(TokenTypes.CLOSEPAREN, "[)]")
-
-        // Declarations
-        matchers[TokenTypes.NUMBER] = LexerMatcherImpl(TokenTypes.NUMBER, "-?\\d+\\.?\\d*")
-        matchers[TokenTypes.STRING] = LexerMatcherImpl(TokenTypes.STRING, "\".*\"|\'.*\'")
-
-        // Variables
-        matchers[TokenTypes.IDENTIFIER] = LexerMatcherImpl(TokenTypes.IDENTIFIER, "[_a-zA-Z][_a-zA-Z0-9]*")
-
+        val matchers = MatcherProvider.getMatchers(PrintScriptVersion.V1_0)
         lexer = LexerImpl(matchers)
     }
 

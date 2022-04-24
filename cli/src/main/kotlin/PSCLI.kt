@@ -1,93 +1,29 @@
 import enums.MenuOption
-import enums.TokenTypes
-import impl.*
-import interfaces.*
-import java.util.*
 
 class CLI {
 
-    private val context: ContextProvider
-    private val lexer: Lexer
-    private val parser: Parser
-    private val interpreter: Interpreter
+    private val version = "1.0"
+    private val verbose = true
 
-    init {
-        val matchers: EnumMap<TokenTypes, LexerMatcher> = EnumMap(TokenTypes::class.java)
+    private val printScript = PrintScript(System.out::println, System.out::println, version, verbose)
 
-        // Keywords
-        matchers[TokenTypes.LET] = LexerMatcherImpl(TokenTypes.LET, "let")
-        matchers[TokenTypes.PRINTLN] = LexerMatcherImpl(TokenTypes.PRINTLN, "println")
+    private fun interpret(src: String) = printScript.interpret(src)
 
-        // Types
-        matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING, "String")
-        matchers[TokenTypes.TYPENUMBER] = LexerMatcherImpl(TokenTypes.TYPENUMBER, "Number")
-
-        // Operations
-        matchers[TokenTypes.PLUS] = LexerMatcherImpl(TokenTypes.PLUS, "[+]")
-        matchers[TokenTypes.MINUS] = LexerMatcherImpl(TokenTypes.MINUS, "[-]")
-        matchers[TokenTypes.TIMES] = LexerMatcherImpl(TokenTypes.TIMES, "[*]")
-        matchers[TokenTypes.DIVIDEDBY] = LexerMatcherImpl(TokenTypes.DIVIDEDBY, "[/]")
-        matchers[TokenTypes.ASSIGNMENT] = LexerMatcherImpl(TokenTypes.ASSIGNMENT, "[=]")
-        matchers[TokenTypes.OPENPAREN] = LexerMatcherImpl(TokenTypes.OPENPAREN, "[(]")
-        matchers[TokenTypes.CLOSEPAREN] = LexerMatcherImpl(TokenTypes.CLOSEPAREN, "[)]")
-
-        // Declarations
-        matchers[TokenTypes.NUMBER] = LexerMatcherImpl(TokenTypes.NUMBER, "-?\\d+\\.?\\d*")
-        matchers[TokenTypes.STRING] = LexerMatcherImpl(TokenTypes.STRING, "\".*\"|\'.*\'")
-
-        // Variables
-        matchers[TokenTypes.IDENTIFIER] = LexerMatcherImpl(TokenTypes.IDENTIFIER, "[_a-zA-Z][_a-zA-Z0-9]*")
-
-        val expressions = listOf(
-            IdentifierExpression::class,
-            LiteralExpression::class,
-            UnaryExpression::class,
-            AddSubtExpression::class,
-            MultDivExpression::class,
-            ParenthesisExpression::class
-        )
-
-        val statements = listOf(
-            DeclarationStatement::class,
-            AssignationStatement::class,
-            DeclarationStatement::class,
-            DeclarationAssignationStatement::class,
-            FunctionStatement::class
-        )
-
-        val expressionMatcher = ExpressionMatcher(expressions)
-        val statementMatcher = StatementMatcher(statements, expressionMatcher)
-
-        context = ContextProviderImpl()
-        lexer = LexerImpl(matchers)
-        parser = ParserImpl(statementMatcher)
-        interpreter = InterpreterImpl(System.out::println, context)
-    }
-
-    private fun interpret(src: String, messages: Boolean) {
-        if (messages) println("Lexing...")
-        val tokens = lexer.lex(src)
-        if (messages) println("Parsing...")
-        val ast = parser.parse(src, tokens)
-        if (messages) println("Interpreting...")
-        interpreter.interpret(ast)
-    }
-
-    private fun printScript() {
+    private fun init() {
         println(
             "██████  ██████  ██ ███    ██ ████████ ███████  ██████ ██████  ██ ██████  ████████ \n" +
-                "██   ██ ██   ██ ██ ████   ██    ██    ██      ██      ██   ██ ██ ██   ██    ██    \n" +
-                "██████  ██████  ██ ██ ██  ██    ██    ███████ ██      ██████  ██ ██████     ██    \n" +
-                "██      ██   ██ ██ ██  ██ ██    ██         ██ ██      ██   ██ ██ ██         ██    \n" +
-                "██      ██   ██ ██ ██   ████    ██    ███████  ██████ ██   ██ ██ ██         ██    \n" +
-                "\n" +
-                "_________________________________________________________________________________ \n" +
-                "\n"
+            "██   ██ ██   ██ ██ ████   ██    ██    ██      ██      ██   ██ ██ ██   ██    ██    \n" +
+            "██████  ██████  ██ ██ ██  ██    ██    ███████ ██      ██████  ██ ██████     ██    \n" +
+            "██      ██   ██ ██ ██  ██ ██    ██         ██ ██      ██   ██ ██ ██         ██    \n" +
+            "██      ██   ██ ██ ██   ████    ██    ███████  ██████ ██   ██ ██ ██         ██    \n" +
+            "\n" +
+            "_________________________________________________________________________________ \n" +
+            "\n"
         )
     }
 
     fun run() {
-        printScript()
+        init()
         var exit = false
         while (!exit) {
             when (menu()) {
@@ -128,13 +64,13 @@ class CLI {
     private fun repl() {
         while (true) {
             print("PrintScript > ")
-            interpret(readln(), false)
+            interpret(readln())
         }
     }
 
     private fun readFromFile() {
         val a = "println('Hello world!')"
-        interpret(a, true)
+        interpret(a)
     }
 }
 

@@ -8,11 +8,16 @@ enum class TokenTypes(override val type: String) : TokenType {
 
     // Keywords
     LET("LET"),
+    CONST("CONST"),
     PRINTLN("PRINTLN"),
+    READINPUT("READINPUT"),
+    IF("IF"),
+    ELSE("ELSE"),
 
     // Types
     TYPESTRING("TYPESTRING"),
     TYPENUMBER("TYPENUMBER"),
+    TYPEBOOLEAN("TYPEBOOLEAN"),
 
     // Operations
     PLUS("PLUS"),
@@ -22,10 +27,13 @@ enum class TokenTypes(override val type: String) : TokenType {
     ASSIGNMENT("ASSIGNMENT"),
     OPENPAREN("OPENPAREN"),
     CLOSEPAREN("CLOSEPAREN"),
+    OPENBRACES("OPENBRACES"),
+    CLOSEBRACES("CLOSEBRACES"),
 
     // Declarations
     NUMBER("NUMBER"),
     STRING("STRING"),
+    BOOLEAN("BOOLEAN"),
 
     // Elements
     WHITESPACE("WHITESPACE"),

@@ -3,11 +3,8 @@ import enums.TokenTypes
 import exception.LexerException
 import fixtures.*
 import impl.LexerImpl
-import impl.LexerMatcherImpl
 import impl.MatcherProvider
 import interfaces.Lexer
-import interfaces.LexerMatcher
-import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -422,7 +419,7 @@ class LexerTest {
     }
 
     @Test
-    fun test045_semicolonTokenTest() {
+    fun test045_identifierWithKeywordsTest() {
         val tokens = lexer.lex(src_045)
         val expected = TokenTypes.SEMICOLON
 
@@ -430,16 +427,17 @@ class LexerTest {
         assertEquals(expected, tokens[0].type)
     }
 
-    // Exception test
-
     @Test
     fun test046_exceptionTest() {
-        assertFailsWith<LexerException>(
-            block = {
-                lexer.lex(src_046)
-            }
-        )
+        val tokens = lexer.lex(src_046)
+        val expected = TokenTypes.IDENTIFIER
+
+        println(tokens.map { token -> token.type })
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
     }
+
+    // Exception test
 
     @Test
     fun test047_exceptionTest() {

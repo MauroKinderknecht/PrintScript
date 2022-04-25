@@ -11,17 +11,6 @@ import java.util.regex.Matcher
 
 class LexerImpl(private var matchers: EnumMap<TokenTypes, LexerMatcher>) : Lexer {
 
-    init {
-        // Elements
-        matchers[TokenTypes.WHITESPACE] = LexerMatcherImpl(TokenTypes.WHITESPACE, " ")
-        matchers[TokenTypes.COLON] = LexerMatcherImpl(TokenTypes.COLON, "[:]")
-        matchers[TokenTypes.SEMICOLON] = LexerMatcherImpl(TokenTypes.SEMICOLON, "[;]")
-        matchers[TokenTypes.EOL] = LexerMatcherImpl(TokenTypes.EOL, "\n")
-
-        // No match token
-        matchers[TokenTypes.NOMATCH] = LexerMatcherImpl(TokenTypes.NOMATCH, ".+")
-    }
-
     override fun lex(source: String): List<Token> {
         val matcher = LexerMatcherImpl(matchers.values.toList()).getMatcher(source)
         return getTokens(matcher)

@@ -1,3 +1,5 @@
+package impl
+
 import enums.MenuOption
 
 class CLI {

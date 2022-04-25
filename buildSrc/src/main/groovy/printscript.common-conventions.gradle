@@ -2,8 +2,9 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
     id 'org.jmailen.kotlinter'
     id 'maven-publish'
-
 }
+
+group 'org.maurokinderknecht.ingsis.printscript'
 
 repositories {
     mavenCentral()
@@ -18,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.austral.ingsis.printscript:printscript-parser-common:0.1.0'
+    implementation 'org.austral.ingsis.printscript:printscript-parser-common:0.1.6'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.20"
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
@@ -48,6 +49,7 @@ publishing {
     }
     publications {
         gpr(MavenPublication) {
+            from(components.java)
         }
     }
 }

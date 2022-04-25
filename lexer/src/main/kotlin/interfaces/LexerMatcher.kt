@@ -7,5 +7,7 @@ interface LexerMatcher {
 
     fun getPattern(): Pattern
 
+    fun getRegex(): String?
+
     fun getMatcher(input: String): Matcher
 }

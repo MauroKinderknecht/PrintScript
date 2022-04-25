@@ -18,8 +18,8 @@ class MatcherProvider {
                     matchers[TokenTypes.PRINTLN] = LexerMatcherImpl(TokenTypes.PRINTLN, "println")
 
                     // Types
-                    matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING, "String")
-                    matchers[TokenTypes.TYPENUMBER] = LexerMatcherImpl(TokenTypes.TYPENUMBER, "Number")
+                    matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING, "String|string")
+                    matchers[TokenTypes.TYPENUMBER] = LexerMatcherImpl(TokenTypes.TYPENUMBER, "Number|number")
 
                     // Operations
                     matchers[TokenTypes.PLUS] = LexerMatcherImpl(TokenTypes.PLUS, "[+]")
@@ -35,7 +35,24 @@ class MatcherProvider {
                     matchers[TokenTypes.STRING] = LexerMatcherImpl(TokenTypes.STRING, "\".*\"|\'.*\'")
 
                     // Variables
-                    matchers[TokenTypes.IDENTIFIER] = LexerMatcherImpl(TokenTypes.IDENTIFIER, "[_a-zA-Z][_a-zA-Z0-9]*")
+                    matchers[TokenTypes.IDENTIFIER] = LexerMatcherImpl(
+                        TokenTypes.IDENTIFIER, "[_a-zA-Z][_a-zA-Z0-9]*",
+                        listOf(
+                            matchers[TokenTypes.LET]!!,
+                            matchers[TokenTypes.PRINTLN]!!,
+                            matchers[TokenTypes.TYPESTRING]!!,
+                            matchers[TokenTypes.TYPENUMBER]!!
+                        )
+                    )
+
+                    // Elements
+                    matchers[TokenTypes.WHITESPACE] = LexerMatcherImpl(TokenTypes.WHITESPACE, " ")
+                    matchers[TokenTypes.COLON] = LexerMatcherImpl(TokenTypes.COLON, "[:]")
+                    matchers[TokenTypes.SEMICOLON] = LexerMatcherImpl(TokenTypes.SEMICOLON, "[;]")
+                    matchers[TokenTypes.EOL] = LexerMatcherImpl(TokenTypes.EOL, "\n")
+
+                    // No match token
+                    matchers[TokenTypes.NOMATCH] = LexerMatcherImpl(TokenTypes.NOMATCH, ".+")
 
                     matchers
                 }

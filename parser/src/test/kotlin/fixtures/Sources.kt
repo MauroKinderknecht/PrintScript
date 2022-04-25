@@ -41,3 +41,7 @@ const val src_019 = "a = (2 + 3) * (3 * 5);"
 const val src_020 = "a = b - (3 / 1);"
 
 const val src_021 = "a = 3 + 1 * 3 - 3 / 2;"
+
+const val src_022 = "a = 5 * 5 - 8 / 4 + 2;"
+
+const val src_023 = "println(5)"

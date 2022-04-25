@@ -1,9 +1,11 @@
 import enums.PrintScriptVersion
+import exception.ParserException
 import fixtures.*
 import impl.*
 import interfaces.Parser
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class ParserTest {
 
@@ -204,5 +206,25 @@ class ParserTest {
         val tree = parser.parse(src_021, tokens)
 
         assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test022_orderOfOperationsTest() {
+        val tokens = tokens_022
+        // val ast = ast_022.toString()
+        val tree = parser.parse(src_022, tokens)
+        println(tree)
+
+        // assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test023_missingSemicolonTest() {
+        val tokens = tokens_023
+        assertFailsWith<ParserException>(
+            block = {
+                parser.parse(src_023, tokens)
+            }
+        )
     }
 }

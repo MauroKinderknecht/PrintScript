@@ -90,12 +90,12 @@ const val src_044 = ":"
 
 const val src_045 = ";"
 
-const val src_046 = "\"Hello"
+const val src_046 = "letconstprintlnnumberstringbooleanNumberStringBoolean"
 
-const val src_047 = "\'Hello"
+const val src_047 = "\"Hello"
 
-const val src_048 = "123.123.124"
+const val src_048 = "\'Hello"
 
-const val src_049 = ".124"
+const val src_049 = "123.123.124"
 
-const val src_050 = "!|@#·¢%∞&¬÷“”≠?´‚¿¡´'çÇ¨´}{_.,`^[]–…„<>œæ€®†¥øπå∫∂ƒ™¶§~~∑©√ßµºª"
+const val src_050 = ".124"

@@ -1,6 +1,7 @@
+package impl
+
 import enums.PrintScriptVersion
 import exception.PrintScriptException
-import impl.*
 import interfaces.*
 import java.util.function.Consumer
 
@@ -15,7 +16,7 @@ class PrintScript(private val emitter: Consumer<String>, private val errorHandle
 
         val psVersion = when (version) {
             "1.0" -> PrintScriptVersion.V1_0
-            else -> throw PrintScriptException("PRINTSCRIPT ERROR: unknown target version")
+            else -> throw PrintScriptException("Unknown target version")
         }
 
         val matchers = MatcherProvider.getMatchers(psVersion)
@@ -34,13 +35,13 @@ class PrintScript(private val emitter: Consumer<String>, private val errorHandle
 
     fun interpret(source: String) {
         try {
-            emitter.accept("Lexing...")
+            if (verbose) emitter.accept("Lexing...")
             val tokens = lexer.lex(source)
-            emitter.accept("Parsing...")
+            if (verbose) emitter.accept("Parsing...")
             val ast = parser.parse(source, tokens)
-            emitter.accept("Interpreting...")
+            if (verbose) emitter.accept("Interpreting...")
             interpreter.interpret(ast)
-            emitter.accept("Finished.")
+            if (verbose) emitter.accept("Finished.")
         } catch (e: PrintScriptException) {
             errorHandler.accept(e.toString())
         }

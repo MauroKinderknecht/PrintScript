@@ -211,11 +211,11 @@ class ParserTest {
     @Test
     fun test022_orderOfOperationsTest() {
         val tokens = tokens_022
-        // val ast = ast_022.toString()
+        val ast = ast_022.toString()
         val tree = parser.parse(src_022, tokens)
         println(tree)
 
-        // assertEquals(ast, tree.toString())
+        assertEquals(ast, tree.toString())
     }
 
     @Test

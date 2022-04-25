@@ -1,9 +1,18 @@
 plugins {
     id 'printscript.common-conventions'
+    id 'application'
 }
 
 dependencies {
     implementation project(':printscript')
 }
 
-version "1.0.0"
+application {
+    mainClass = 'impl.PSCLIKt'
+}
+
+run {
+    standardInput = System.in
+}
+
+version "1.0.4"

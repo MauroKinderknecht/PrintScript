@@ -306,7 +306,8 @@ val tokens_021 = listOf(
     Token(type = TokenTypes.DIVIDEDBY, from = 18, to = 19, range = LexicalRange(startCol = 18, startLine = 0, endCol = 19, endLine = 0)),
     Token(type = TokenTypes.WHITESPACE, from = 19, to = 20, range = LexicalRange(startCol = 19, startLine = 0, endCol = 20, endLine = 0)),
     Token(type = TokenTypes.NUMBER, from = 20, to = 21, range = LexicalRange(startCol = 20, startLine = 0, endCol = 21, endLine = 0)),
-    Token(type = TokenTypes.EOF, from = 21, to = 21, range = LexicalRange(startCol = 21, startLine = 0, endCol = 21, endLine = 0))
+    Token(type = TokenTypes.SEMICOLON, from = 21, to = 22, range = LexicalRange(startCol = 21, startLine = 0, endCol = 22, endLine = 0)),
+    Token(type = TokenTypes.EOF, from = 22, to = 22, range = LexicalRange(startCol = 22, startLine = 0, endCol = 22, endLine = 0))
 )
 
 val tokens_022 = listOf(

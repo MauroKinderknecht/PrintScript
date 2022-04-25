@@ -17,7 +17,7 @@ val ast_002 = ProgramAST(
     children = listOf(
         AssignationAST(
             lhs = VariableAST(variable = Content(content = "a", token = tokens_002[0])),
-            expression = LiteralAST(literal = Content(content = "\"This is a test!\"", token = tokens_002[4]))
+            expression = LiteralAST(literal = Content(content = "This is a test!", token = tokens_002[4]))
         )
     )
 )
@@ -39,7 +39,7 @@ val ast_004 = ProgramAST(
                 identifier = Content(content = "a", token = tokens_004[2]),
                 type = Content(content = "String", token = tokens_004[5])
             ),
-            expression = LiteralAST(literal = Content(content = "\"This is a test!\"", token = tokens_004[9]))
+            expression = LiteralAST(literal = Content(content = "This is a test!", token = tokens_004[9]))
         )
     )
 )
@@ -78,7 +78,7 @@ val ast_007 = ProgramAST(
 
 val ast_008 = ProgramAST(
     children = listOf(
-        FunctionAST(function = Content(content = "println", tokens_009[0]), LiteralAST(literal = Content(content = "\"This is a test!\"", token = tokens_008[2])))
+        FunctionAST(function = Content(content = "println", tokens_009[0]), LiteralAST(literal = Content(content = "This is a test!", token = tokens_008[2])))
     )
 )
 
@@ -96,7 +96,7 @@ val ast_010 = ProgramAST(
         ),
         AssignationAST(
             lhs = VariableAST(variable = Content(content = "b", token = tokens_010[7])),
-            expression = LiteralAST(literal = Content(content = "\"Hello\"", token = tokens_010[11]))
+            expression = LiteralAST(literal = Content(content = "Hello", token = tokens_010[11]))
         ),
     )
 )
@@ -267,3 +267,29 @@ val ast_021 = ProgramAST(
         ),
     )
 )
+
+val ast_022 = ProgramAST(
+    children=listOf(
+        AssignationAST(
+            lhs=VariableAST(variable=Content(content="a", token=tokens_022[0])),
+            expression=BinaryExpressionAST(
+                left=BinaryExpressionAST(
+                    left=LiteralAST(literal=Content(content="5", token=tokens_022[4])),
+                    operation=Content(content="*", token=tokens_022[6]),
+                    right=LiteralAST(literal=Content(content="5", token=tokens_022[8]))
+                ),
+                operation=Content(content="-", token= tokens_022[10]),
+                right=BinaryExpressionAST(
+                    left=BinaryExpressionAST(
+                        left=LiteralAST(literal=Content(content="8", token=tokens_022[12])),
+                        operation=Content(content="/", token=tokens_022[14]),
+                        right=LiteralAST(literal=Content(content="4", token=tokens_022[16]))
+                    ),
+                    operation=Content(content="+", token= tokens_022[18]),
+                    right=LiteralAST(literal=Content(content="2", token=tokens_022[20]))
+                )
+            )
+        )
+    )
+)
+

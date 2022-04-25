@@ -269,27 +269,26 @@ val ast_021 = ProgramAST(
 )
 
 val ast_022 = ProgramAST(
-    children=listOf(
+    children = listOf(
         AssignationAST(
-            lhs=VariableAST(variable=Content(content="a", token=tokens_022[0])),
-            expression=BinaryExpressionAST(
-                left=BinaryExpressionAST(
-                    left=LiteralAST(literal=Content(content="5", token=tokens_022[4])),
-                    operation=Content(content="*", token=tokens_022[6]),
-                    right=LiteralAST(literal=Content(content="5", token=tokens_022[8]))
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_022[0])),
+            expression = BinaryExpressionAST(
+                left = BinaryExpressionAST(
+                    left = LiteralAST(literal = Content(content = "5", token = tokens_022[4])),
+                    operation = Content(content = "*", token = tokens_022[6]),
+                    right = LiteralAST(literal = Content(content = "5", token = tokens_022[8]))
                 ),
-                operation=Content(content="-", token= tokens_022[10]),
-                right=BinaryExpressionAST(
-                    left=BinaryExpressionAST(
-                        left=LiteralAST(literal=Content(content="8", token=tokens_022[12])),
-                        operation=Content(content="/", token=tokens_022[14]),
-                        right=LiteralAST(literal=Content(content="4", token=tokens_022[16]))
+                operation = Content(content = "-", token = tokens_022[10]),
+                right = BinaryExpressionAST(
+                    left = BinaryExpressionAST(
+                        left = LiteralAST(literal = Content(content = "8", token = tokens_022[12])),
+                        operation = Content(content = "/", token = tokens_022[14]),
+                        right = LiteralAST(literal = Content(content = "4", token = tokens_022[16]))
                     ),
-                    operation=Content(content="+", token= tokens_022[18]),
-                    right=LiteralAST(literal=Content(content="2", token=tokens_022[20]))
+                    operation = Content(content = "+", token = tokens_022[18]),
+                    right = LiteralAST(literal = Content(content = "2", token = tokens_022[20]))
                 )
             )
         )
     )
 )
-

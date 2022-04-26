@@ -67,7 +67,7 @@ class InterpreterImpl(private var emitter: Consumer<String>, private val reader:
     override fun visit(tree: VoidFunctionAST): Any {
         return when (tree.function.token.type) {
             TokenTypes.PRINTLN -> {
-                val (_, expression) = eval(tree.expression!!) as Pair<TokenType, Any>
+                val (_, expression) = eval(tree.expression) as Pair<TokenType, Any>
                 if (!isValidation) emitter.accept(expression.toString())
                 else Unit
             }

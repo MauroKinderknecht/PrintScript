@@ -14,6 +14,7 @@ class LexerTest {
     private val lexer: Lexer
 
     init {
+        MatcherProvider.getMatchers(PrintScriptVersion.V1_0)
         val matchers = MatcherProvider.getMatchers(PrintScriptVersion.V1_1)
         lexer = LexerImpl(matchers)
     }

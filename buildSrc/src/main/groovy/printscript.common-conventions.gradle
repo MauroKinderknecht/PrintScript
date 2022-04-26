@@ -2,6 +2,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
     id 'org.jmailen.kotlinter'
     id 'maven-publish'
+    id 'jacoco'
 }
 
 group 'org.maurokinderknecht.ingsis.printscript'
@@ -34,6 +35,7 @@ kotlinter {
 
 tasks.named('test') {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
 }
 
 publishing {

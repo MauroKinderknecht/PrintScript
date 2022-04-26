@@ -20,7 +20,7 @@ class InterpreterTest {
     init {
         contextProvider = ContextProviderImpl()
         consumer = TestConsumer()
-        interpreter = InterpreterImpl(consumer, contextProvider)
+        interpreter = InterpreterImpl(consumer, ::readln, contextProvider)
     }
 
     // V1 tests

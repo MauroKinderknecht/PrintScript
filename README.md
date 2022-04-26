@@ -34,11 +34,20 @@ Then we need to execute the line below
 chmod +x .git/hooks/pre-commit
 ```
 
-## Known bugs
-- Que una keyword sea una keyword "letVar" deberia ser un Identifier y matchea a 2 tokens Let y Identifier
-- Code coverage en los test
-- También debe poder correr en un modo que solo valide la sintaxis y
-  semántica del archivo. Como argumentos debería poder recibir por lo menos:
-  ● El archivo fuente.
-  ● El modo de ejecución, puede ser interpretación o validación.
-  ● La versión del archivo a interpretar. Opcional. Por ahora solo 1.0.
+## Useful commands
+
+Run Linter & Formatter
+```
+./gradlew lintKotlin
+./gradlew formatKotlin
+```
+
+Run tests with code coverage
+```
+./gradlew test
+```
+
+Run CLI
+```
+./gradlew --console plain run
+```

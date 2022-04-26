@@ -3,13 +3,21 @@ package enums
 import org.austral.ingsis.printscript.common.TokenType
 
 enum class TokenTypes(override val type: String) : TokenType {
-    // Keywords - Should be declared first to match first
+    // Variables
+    IDENTIFIER("IDENTIFIER"),
+
+    // Keywords
     LET("LET"),
+    CONST("CONST"),
     PRINTLN("PRINTLN"),
+    READINPUT("READINPUT"),
+    IF("IF"),
+    ELSE("ELSE"),
 
     // Types
     TYPESTRING("TYPESTRING"),
     TYPENUMBER("TYPENUMBER"),
+    TYPEBOOLEAN("TYPEBOOLEAN"),
 
     // Operations
     PLUS("PLUS"),
@@ -19,13 +27,13 @@ enum class TokenTypes(override val type: String) : TokenType {
     ASSIGNMENT("ASSIGNMENT"),
     OPENPAREN("OPENPAREN"),
     CLOSEPAREN("CLOSEPAREN"),
+    OPENBRACE("OPENBRACE"),
+    CLOSEBRACE("CLOSEBRACE"),
 
     // Declarations
     NUMBER("NUMBER"),
     STRING("STRING"),
-
-    // Variables
-    IDENTIFIER("IDENTIFIER"),
+    BOOLEAN("BOOLEAN"),
 
     // Elements
     WHITESPACE("WHITESPACE"),

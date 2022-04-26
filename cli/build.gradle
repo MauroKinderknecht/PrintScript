@@ -1,13 +1,18 @@
 plugins {
     id 'printscript.common-conventions'
+    id 'application'
 }
 
 dependencies {
-    implementation 'com.github.ajalt.clikt:clikt:3.4.0'
-    implementation project(':common')
-    implementation project(':lexer')
-    implementation project(':parser')
-    implementation project(':interpreter')
+    implementation project(':printscript')
 }
 
-version "1.0.0-SNAPSHOT"
+application {
+    mainClass = 'impl.PSCLIKt'
+}
+
+run {
+    standardInput = System.in
+}
+
+version "1.0.4"

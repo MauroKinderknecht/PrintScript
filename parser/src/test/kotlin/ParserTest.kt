@@ -1,30 +1,18 @@
+import enums.PrintScriptVersion
+import exception.ParserException
 import fixtures.*
 import impl.*
 import interfaces.Parser
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class ParserTest {
 
     private val parser: Parser
 
     init {
-        val expressions = listOf(
-            IdentifierExpression::class,
-            LiteralExpression::class,
-            UnaryExpression::class,
-            AddSubtExpression::class,
-            MultDivExpression::class,
-            ParenthesisExpression::class
-        )
-        val statements = listOf(
-            DeclarationStatement::class,
-            AssignationStatement::class,
-            DeclarationStatement::class,
-            DeclarationAssignationStatement::class,
-            FunctionStatement::class
-        )
-
+        val (statements, expressions) = SyntaxElementsProvider.getExpressionElements(PrintScriptVersion.V1_1)
         val expressionMatcher = ExpressionMatcher(expressions)
         val statementMatcher = StatementMatcher(statements, expressionMatcher)
 
@@ -216,6 +204,97 @@ class ParserTest {
         val tokens = tokens_021
         val ast = ast_021.toString()
         val tree = parser.parse(src_021, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test022_orderOfOperationsTest() {
+        val tokens = tokens_022
+        val ast = ast_022.toString()
+        val tree = parser.parse(src_022, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test023_missingSemicolonTest() {
+        val tokens = tokens_023
+        assertFailsWith<ParserException>(
+            block = {
+                parser.parse(src_023, tokens)
+            }
+        )
+    }
+
+    @Test
+    fun test024_stringConcatenationTest() {
+        val tokens = tokens_024
+        val ast = ast_024.toString()
+        val tree = parser.parse(src_024, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test025_constTest() {
+        val tokens = tokens_025
+        val ast = ast_025.toString()
+        val tree = parser.parse(src_025, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test026_booleanDataTypeTest() {
+        val tokens = tokens_026
+        val ast = ast_026.toString()
+        val tree = parser.parse(src_026, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test027_inlineIfTest() {
+        val tokens = tokens_027
+        val ast = ast_027.toString()
+        val tree = parser.parse(src_027, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test028_multilineIfTest() {
+        val tokens = tokens_028
+        val ast = ast_028.toString()
+        val tree = parser.parse(src_028, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test029_multiStatementIfBlockTest() {
+        val tokens = tokens_029
+        val ast = ast_029.toString()
+        val tree = parser.parse(src_029, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test030_IfElseTest() {
+        val tokens = tokens_030
+        val ast = ast_030.toString()
+        val tree = parser.parse(src_030, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test031_readInputTest() {
+        val tokens = tokens_031
+        val ast = ast_031.toString()
+        val tree = parser.parse(src_031, tokens)
 
         assertEquals(ast, tree.toString())
     }

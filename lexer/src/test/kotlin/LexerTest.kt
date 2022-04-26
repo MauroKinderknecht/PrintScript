@@ -1,11 +1,10 @@
+import enums.PrintScriptVersion
 import enums.TokenTypes
 import exception.LexerException
 import fixtures.*
 import impl.LexerImpl
-import impl.LexerMatcherImpl
+import impl.MatcherProvider
 import interfaces.Lexer
-import interfaces.LexerMatcher
-import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -15,32 +14,8 @@ class LexerTest {
     private val lexer: Lexer
 
     init {
-        val matchers: EnumMap<TokenTypes, LexerMatcher> = EnumMap(TokenTypes::class.java)
-
-        // Keywords
-        matchers[TokenTypes.LET] = LexerMatcherImpl(TokenTypes.LET, "let")
-        matchers[TokenTypes.PRINTLN] = LexerMatcherImpl(TokenTypes.PRINTLN, "println")
-
-        // Types
-        matchers[TokenTypes.TYPESTRING] = LexerMatcherImpl(TokenTypes.TYPESTRING, "String")
-        matchers[TokenTypes.TYPENUMBER] = LexerMatcherImpl(TokenTypes.TYPENUMBER, "Number")
-
-        // Operations
-        matchers[TokenTypes.PLUS] = LexerMatcherImpl(TokenTypes.PLUS, "[+]")
-        matchers[TokenTypes.MINUS] = LexerMatcherImpl(TokenTypes.MINUS, "[-]")
-        matchers[TokenTypes.TIMES] = LexerMatcherImpl(TokenTypes.TIMES, "[*]")
-        matchers[TokenTypes.DIVIDEDBY] = LexerMatcherImpl(TokenTypes.DIVIDEDBY, "[/]")
-        matchers[TokenTypes.ASSIGNMENT] = LexerMatcherImpl(TokenTypes.ASSIGNMENT, "[=]")
-        matchers[TokenTypes.OPENPAREN] = LexerMatcherImpl(TokenTypes.OPENPAREN, "[(]")
-        matchers[TokenTypes.CLOSEPAREN] = LexerMatcherImpl(TokenTypes.CLOSEPAREN, "[)]")
-
-        // Declarations
-        matchers[TokenTypes.NUMBER] = LexerMatcherImpl(TokenTypes.NUMBER, "-?\\d+\\.?\\d*")
-        matchers[TokenTypes.STRING] = LexerMatcherImpl(TokenTypes.STRING, "\".*\"|\'.*\'")
-
-        // Variables
-        matchers[TokenTypes.IDENTIFIER] = LexerMatcherImpl(TokenTypes.IDENTIFIER, "[_a-zA-Z][_a-zA-Z0-9]*")
-
+        MatcherProvider.getMatchers(PrintScriptVersion.V1_0)
+        val matchers = MatcherProvider.getMatchers(PrintScriptVersion.V1_1)
         lexer = LexerImpl(matchers)
     }
 
@@ -453,16 +428,16 @@ class LexerTest {
         assertEquals(expected, tokens[0].type)
     }
 
-    // Exception test
-
     @Test
-    fun test046_exceptionTest() {
-        assertFailsWith<LexerException>(
-            block = {
-                lexer.lex(src_046)
-            }
-        )
+    fun test046_identifierWithKeywordsTokenTest() {
+        val tokens = lexer.lex(src_046)
+        val expected = TokenTypes.IDENTIFIER
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
     }
+
+    // Exception test
 
     @Test
     fun test047_exceptionTest() {
@@ -498,5 +473,115 @@ class LexerTest {
                 lexer.lex(src_050)
             }
         )
+    }
+
+    // v1.1 tokens test
+
+    @Test
+    fun test051_constTokenTest() {
+        val tokens = lexer.lex(src_051)
+        val expected = TokenTypes.CONST
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test052_ifTokenTest() {
+        val tokens = lexer.lex(src_052)
+        val expected = TokenTypes.IF
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test053_elseTokenTest() {
+        val tokens = lexer.lex(src_053)
+        val expected = TokenTypes.ELSE
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test054_readInputTokenTest() {
+        val tokens = lexer.lex(src_054)
+        val expected = TokenTypes.READINPUT
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test055_booleanTokenTest() {
+        val tokens = lexer.lex(src_055)
+        val expected = TokenTypes.TYPEBOOLEAN
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test056_booleanTokenTest() {
+        val tokens = lexer.lex(src_056)
+        val expected = TokenTypes.TYPEBOOLEAN
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test057_numberTokenTest() {
+        val tokens = lexer.lex(src_057)
+        val expected = TokenTypes.TYPENUMBER
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test058_stringTokenTest() {
+        val tokens = lexer.lex(src_058)
+        val expected = TokenTypes.TYPESTRING
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test059_trueTokenTest() {
+        val tokens = lexer.lex(src_059)
+        val expected = TokenTypes.BOOLEAN
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test060_falseTokenTest() {
+        val tokens = lexer.lex(src_060)
+        val expected = TokenTypes.BOOLEAN
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test061_openBracesTokenTest() {
+        val tokens = lexer.lex(src_061)
+        val expected = TokenTypes.OPENBRACE
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
+    }
+
+    @Test
+    fun test062_closeBracesTokenTest() {
+        val tokens = lexer.lex(src_062)
+        val expected = TokenTypes.CLOSEBRACE
+
+        assertEquals(2, tokens.size)
+        assertEquals(expected, tokens[0].type)
     }
 }

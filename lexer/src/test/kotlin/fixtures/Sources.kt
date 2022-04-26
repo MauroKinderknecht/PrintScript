@@ -90,12 +90,36 @@ const val src_044 = ":"
 
 const val src_045 = ";"
 
-const val src_046 = "\"Hello"
+const val src_046 = "letconstprintlnnumberstringbooleanNumberStringBoolean"
 
-const val src_047 = "\'Hello"
+const val src_047 = "\"Hello"
 
-const val src_048 = "123.123.124"
+const val src_048 = "\'Hello"
 
-const val src_049 = ".124"
+const val src_049 = "123.123.124"
 
-const val src_050 = "!|@#·¢%∞&¬÷“”≠?´‚¿¡´'çÇ¨´}{_.,`^[]–…„<>œæ€®†¥øπå∫∂ƒ™¶§~~∑©√ßµºª"
+const val src_050 = ".124"
+
+const val src_051 = "const"
+
+const val src_052 = "if"
+
+const val src_053 = "else"
+
+const val src_054 = "readInput"
+
+const val src_055 = "boolean"
+
+const val src_056 = "Boolean"
+
+const val src_057 = "number"
+
+const val src_058 = "string"
+
+const val src_059 = "true"
+
+const val src_060 = "false"
+
+const val src_061 = "{"
+
+const val src_062 = "}"

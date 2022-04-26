@@ -28,15 +28,15 @@ class LexerImpl(private var matchers: EnumMap<TokenTypes, LexerMatcher>) : Lexer
 
             // Check matches with tokens
             val matched: Token = matchers.keys
-                .filter { tokenType -> matcher.group(tokenType.type) != null }
-                .map { tokenType ->
-                    val endColumn = if (tokenType == TokenTypes.EOL) 0 else column + match.length
-                    val endLine = if (tokenType == TokenTypes.EOL) line + 1 else line
+                .filter { matcher.group(it.type) != null }
+                .map {
+                    val endColumn = if (it == TokenTypes.EOL) 0 else column + match.length
+                    val endLine = if (it == TokenTypes.EOL) line + 1 else line
                     val endPos = position + match.length
                     val range = LexicalRange(column, line, endColumn, endLine)
 
-                    if (tokenType == TokenTypes.NOMATCH) throw LexerException(range)
-                    val token = Token(tokenType, position, endPos, range)
+                    if (it == TokenTypes.NOMATCH) throw LexerException(range)
+                    val token = Token(it, position, endPos, range)
 
                     column = endColumn
                     line = endLine

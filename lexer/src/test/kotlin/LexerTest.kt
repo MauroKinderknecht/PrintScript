@@ -569,7 +569,7 @@ class LexerTest {
     @Test
     fun test061_openBracesTokenTest() {
         val tokens = lexer.lex(src_061)
-        val expected = TokenTypes.OPENBRACES
+        val expected = TokenTypes.OPENBRACE
 
         assertEquals(2, tokens.size)
         assertEquals(expected, tokens[0].type)
@@ -578,7 +578,7 @@ class LexerTest {
     @Test
     fun test062_closeBracesTokenTest() {
         val tokens = lexer.lex(src_062)
-        val expected = TokenTypes.CLOSEBRACES
+        val expected = TokenTypes.CLOSEBRACE
 
         assertEquals(2, tokens.size)
         assertEquals(expected, tokens[0].type)

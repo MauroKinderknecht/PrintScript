@@ -17,7 +17,7 @@ class LexerMatcherImpl : LexerMatcher {
 
     constructor(matchers: List<LexerMatcher>) {
         pattern = Pattern.compile(
-            matchers.joinToString("|") { matcher -> matcher.getPattern().toString() }
+            matchers.joinToString("|") { it.getPattern().toString() }
         )
         this.regex = null
     }
@@ -29,9 +29,7 @@ class LexerMatcherImpl : LexerMatcher {
                 type,
                 String.format(
                     "(?!(%s)\\b)\\b%s",
-                    notMatchers
-                        .filter { matcher -> matcher.getRegex() != null }
-                        .joinToString("|") { matcher -> matcher.getRegex()!! },
+                    notMatchers.filter { it.getRegex() != null }.joinToString("|") { it.getRegex()!! },
                     regex
                 )
             )

@@ -1,15 +1,11 @@
 package impl
 
 import enums.MenuOption
+import java.io.File
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
 
 class CLI {
-
-    private val version = "1.1"
-    private val verbose = false
-
-    private val printScript = PrintScript(::println, ::println, ::readln, version, verbose,)
-
-    private fun interpret(src: String) = printScript.interpret(src)
 
     private fun init() {
         println(
@@ -33,8 +29,9 @@ class CLI {
                     repl()
                     exit = true
                 }
-                MenuOption.FILE -> readFromFile()
-                MenuOption.EXIT -> exit = true
+                MenuOption.FILE -> readFromFile(false)
+                MenuOption.VALIDATE_FILE -> readFromFile(true)
+                MenuOption.EXIT -> return
             }
         }
     }
@@ -43,15 +40,17 @@ class CLI {
         println(
             "Select an option: \n" +
                 "1. REPL \n" +
-                "2. Read from File \n" +
-                "3. Exit \n"
+                "2. Interpret from File \n" +
+                "3. Validate from File \n" +
+                "4. Exit"
         )
 
         return try {
             when (val option = readln().toInt()) {
                 1 -> MenuOption.REPL
                 2 -> MenuOption.FILE
-                3 -> MenuOption.EXIT
+                3 -> MenuOption.VALIDATE_FILE
+                4 -> MenuOption.EXIT
                 else -> {
                     println("Oops, $option is not a valid option. Please enter a valid option.")
                     menu()
@@ -64,15 +63,28 @@ class CLI {
     }
 
     private fun repl() {
+        println("Select an version:")
+        val version = readln()
+
+        val printScript = PrintScript(::println, ::println, ::readln, version, false)
+
         while (true) {
             print("PrintScript > ")
-            interpret(readln())
+            printScript.interpret(readln())
         }
     }
 
-    private fun readFromFile() {
-        val a = "println('Hello world!')"
-        interpret(a)
+    private fun readFromFile(validate: Boolean) {
+        println("Select an version:")
+        val version = readln()
+        println("Insert the path of the file:")
+        val path = readln()
+
+        val srcFile = File(path)
+        val src = Files.readString(srcFile.toPath(), StandardCharsets.US_ASCII)
+
+        val printScript = PrintScript(::println, ::println, ::readln, version, true)
+        if (validate) printScript.validate(src) else printScript.interpret(src)
     }
 }
 

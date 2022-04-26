@@ -11,13 +11,18 @@ import java.util.function.Consumer
 
 class InterpreterImpl(private var emitter: Consumer<String>, private val reader: () -> (String), private var context: ContextProvider) : Interpreter, ASTVisitor {
 
+    var isValidation: Boolean = false
+
     override fun interpret(tree: AST) {
+        isValidation = false
         if (tree !is ProgramAST) throw InterpreterException("Not a PrintScript program", null)
         eval(tree)
     }
 
-    override fun validate(tree: AST): Boolean {
-        TODO("Not yet implemented")
+    override fun validate(tree: AST) {
+        isValidation = true
+        if (tree !is ProgramAST) throw InterpreterException("Not a PrintScript program", null)
+        eval(tree)
     }
 
     private fun eval(tree: AST): Any = tree.accept(this)
@@ -63,7 +68,8 @@ class InterpreterImpl(private var emitter: Consumer<String>, private val reader:
         return when (tree.function.token.type) {
             TokenTypes.PRINTLN -> {
                 val (_, expression) = eval(tree.expression!!) as Pair<TokenType, Any>
-                emitter.accept(expression.toString())
+                if (!isValidation) emitter.accept(expression.toString())
+                else Unit
             }
             else -> throw InterpreterException("Function ${tree.function.content} does not exist", tree.function.token.range)
         }
@@ -74,7 +80,8 @@ class InterpreterImpl(private var emitter: Consumer<String>, private val reader:
             TokenTypes.READINPUT -> {
                 val (_, argument) = eval(tree.arguments[0]) as Pair<TokenType, Any>
                 emitter.accept(argument.toString())
-                return Pair(TokenTypes.STRING, reader())
+                if (!isValidation) Pair(TokenTypes.STRING, reader())
+                else Pair(TokenTypes.STRING, "placeholder")
             }
             else -> throw InterpreterException("Function ${tree.function.content} does not exist", tree.function.token.range)
         }

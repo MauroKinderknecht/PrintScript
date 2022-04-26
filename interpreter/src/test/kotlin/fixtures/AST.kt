@@ -95,13 +95,13 @@ val ast_008 = ProgramAST(
 
 val ast_009 = ProgramAST(
     children = listOf(
-        FunctionAST(function = Content(content = "println", tokens_009[0]), LiteralAST(literal = Content(content = "\"This is a test!\"", token = tokens_009[2])))
+        VoidFunctionAST(function = Content(content = "println", tokens_009[0]), LiteralAST(literal = Content(content = "\"This is a test!\"", token = tokens_009[2])))
     )
 )
 
 val ast_010 = ProgramAST(
     children = listOf(
-        FunctionAST(function = Content(content = "println", tokens_010[0]), LiteralAST(literal = Content(content = "1.123", token = tokens_010[2])))
+        VoidFunctionAST(function = Content(content = "println", tokens_010[0]), LiteralAST(literal = Content(content = "1.123", token = tokens_010[2])))
     )
 )
 

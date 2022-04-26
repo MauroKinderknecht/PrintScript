@@ -21,7 +21,9 @@ enum class SyntaxElements(override val types: List<TokenType>) : SyntaxElement {
 
     TYPEASSIGNMENT(listOf(TokenTypes.COLON)),
 
-    FUNCTION(listOf(TokenTypes.PRINTLN, TokenTypes.READINPUT)),
+    VOIDFUNCTION(listOf(TokenTypes.PRINTLN)),
+
+    FUNCTIONCALL(listOf(TokenTypes.READINPUT)),
 
     LITERAL(listOf(TokenTypes.STRING, TokenTypes.NUMBER, TokenTypes.BOOLEAN)),
 
@@ -29,5 +31,9 @@ enum class SyntaxElements(override val types: List<TokenType>) : SyntaxElement {
 
     NOTUSEFUL(listOf(TokenTypes.EOL, TokenTypes.WHITESPACE)),
 
-    END(listOf(TokenTypes.SEMICOLON))
+    END(listOf(TokenTypes.SEMICOLON)),
+
+    IF(listOf(TokenTypes.IF)),
+
+    ELSE(listOf(TokenTypes.ELSE)),
 }

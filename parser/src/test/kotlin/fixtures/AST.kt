@@ -78,13 +78,13 @@ val ast_007 = ProgramAST(
 
 val ast_008 = ProgramAST(
     children = listOf(
-        FunctionAST(function = Content(content = "println", tokens_009[0]), LiteralAST(literal = Content(content = "This is a test!", token = tokens_008[2])))
+        VoidFunctionAST(function = Content(content = "println", tokens_009[0]), LiteralAST(literal = Content(content = "This is a test!", token = tokens_008[2])))
     )
 )
 
 val ast_009 = ProgramAST(
     children = listOf(
-        FunctionAST(function = Content(content = "println", tokens_009[0]), LiteralAST(literal = Content(content = "1.123", token = tokens_009[2])))
+        VoidFunctionAST(function = Content(content = "println", tokens_009[0]), LiteralAST(literal = Content(content = "1.123", token = tokens_009[2])))
     )
 )
 
@@ -338,12 +338,85 @@ val ast_027 = ProgramAST(
             condition = LiteralAST(literal = Content("true", token = tokens_027[3])),
             truthy = BlockAST(
                 statements = listOf(
-                    FunctionAST(
+                    VoidFunctionAST(
                         function = Content(content = "println", token = tokens_027[8]),
                         expression = LiteralAST(literal = Content("20", token = tokens_027[10])),
                     )
                 )
             )
         )
+    )
+)
+
+val ast_028 = ProgramAST(
+    children = listOf(
+        IfAST(
+            condition = LiteralAST(literal = Content("true", token = tokens_028[3])),
+            truthy = BlockAST(
+                statements = listOf(
+                    VoidFunctionAST(
+                        function = Content(content = "println", token = tokens_028[10]),
+                        expression = LiteralAST(literal = Content("20", token = tokens_028[12])),
+                    )
+                )
+            )
+        )
+    )
+)
+
+val ast_029 = ProgramAST(
+    children = listOf(
+        IfAST(
+            condition = LiteralAST(literal = Content("true", token = tokens_029[3])),
+            truthy = BlockAST(
+                statements = listOf(
+                    VoidFunctionAST(
+                        function = Content(content = "println", token = tokens_029[10]),
+                        expression = LiteralAST(literal = Content("30", token = tokens_029[12])),
+                    ),
+                    VoidFunctionAST(
+                        function = Content(content = "println", token = tokens_029[18]),
+                        expression = LiteralAST(literal = Content("'Hello'", token = tokens_029[20])),
+                    )
+                )
+            )
+        )
+    )
+)
+
+val ast_030 = ProgramAST(
+    children = listOf(
+        IfElseAST(
+            condition = LiteralAST(literal = Content("false", token = tokens_030[3])),
+            truthy = BlockAST(
+                statements = listOf(
+                    VoidFunctionAST(
+                        function = Content(content = "println", token = tokens_030[8]),
+                        expression = LiteralAST(literal = Content("20", token = tokens_030[10])),
+                    ),
+                )
+            ),
+            falsy = BlockAST(
+                statements = listOf(
+                    VoidFunctionAST(
+                        function = Content(content = "println", token = tokens_030[19]),
+                        expression = LiteralAST(literal = Content("10", token = tokens_030[21])),
+                    ),
+                )
+            )
+        )
+    )
+)
+
+val ast_031 = ProgramAST(
+    children = listOf(
+        AssignationAST(
+            lhs = DeclarationAST(
+                variable = Content(content = "let", token = tokens_031[0]),
+                identifier = Content(content = "a", token = tokens_031[2]),
+                type = Content(content = "String", token = tokens_031[5])
+            ),
+            expression = FunctionCallAST(function = Content("readInput", token = tokens_031[9])),
+        ),
     )
 )

@@ -23,13 +23,13 @@ abstract class Expression(val matcher: ExpressionMatcher) : Syntax {
 
 class ExpressionMatcher(matchers: List<KClass<out Expression>>) : SyntaxMatcher {
 
-    private val expressions: List<Expression> = matchers.mapNotNull { e -> e.primaryConstructor?.call(this) }
+    private val expressions: List<Expression> = matchers.mapNotNull { it.primaryConstructor?.call(this) }
 
     override fun match(content: List<Content<String>>): AST? =
-        expressions.firstNotNullOfOrNull { expression -> expression.parse(content) }
+        expressions.firstNotNullOfOrNull { it.parse(content) }
 
     fun match(content: List<Content<String>>, without: List<KClass<out Expression>>): AST? =
-        expressions.filter { expression -> !without.contains(expression::class) }.firstNotNullOfOrNull { expression -> expression.parse(content) }
+        expressions.filter { !without.contains(it::class) }.firstNotNullOfOrNull { it.parse(content) }
 }
 
 // (identifier)
@@ -107,6 +107,20 @@ class ParenthesisExpression(matcher: ExpressionMatcher) : Expression(matcher) {
         val closeParen = TokenTypes.CLOSEPAREN == content[content.size - 1].token.type
 
         return if (openParen && closeParen && expression != null) expression
+        else null
+    }
+}
+
+// (function) ( ( ) ( ) )
+class FunctionCallExpression(matcher: ExpressionMatcher) : Expression(matcher) {
+    override fun parse(content: List<Content<String>>): AST? {
+        if (content.size < 3) return null
+
+        val function = if ((SyntaxElements.FUNCTIONCALL.contains(content[0].token.type))) content[0] else null
+        val openParen = TokenTypes.OPENPAREN == content[1].token.type
+        val closeParen = TokenTypes.CLOSEPAREN == content[2].token.type
+
+        return if (function != null && openParen && closeParen) FunctionCallAST(function)
         else null
     }
 }

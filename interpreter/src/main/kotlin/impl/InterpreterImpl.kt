@@ -61,7 +61,7 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
         return context.write(variable as String, type, expression)
     }
 
-    override fun visit(tree: FunctionAST): Any {
+    override fun visit(tree: VoidFunctionAST): Any {
         return when (tree.function.token.type) {
             TokenTypes.PRINTLN -> {
                 if (tree.expression == null) throw InterpreterException("Expresion expected", tree.function.token.range)

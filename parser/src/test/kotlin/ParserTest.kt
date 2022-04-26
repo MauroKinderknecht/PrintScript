@@ -266,7 +266,7 @@ class ParserTest {
     @Test
     fun test028_multilineIfTest() {
         val tokens = tokens_028
-        val ast = ast_022.toString()
+        val ast = ast_028.toString()
         val tree = parser.parse(src_028, tokens)
 
         assertEquals(ast, tree.toString())
@@ -275,7 +275,7 @@ class ParserTest {
     @Test
     fun test029_multiStatementIfBlockTest() {
         val tokens = tokens_029
-        val ast = ast_022.toString()
+        val ast = ast_029.toString()
         val tree = parser.parse(src_029, tokens)
 
         assertEquals(ast, tree.toString())
@@ -284,7 +284,7 @@ class ParserTest {
     @Test
     fun test030_IfElseTest() {
         val tokens = tokens_030
-        val ast = ast_022.toString()
+        val ast = ast_030.toString()
         val tree = parser.parse(src_030, tokens)
 
         assertEquals(ast, tree.toString())
@@ -293,7 +293,7 @@ class ParserTest {
     @Test
     fun test031_readInputTest() {
         val tokens = tokens_031
-        val ast = ast_022.toString()
+        val ast = ast_031.toString()
         val tree = parser.parse(src_031, tokens)
 
         assertEquals(ast, tree.toString())

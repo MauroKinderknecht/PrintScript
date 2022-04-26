@@ -36,7 +36,8 @@ class SyntaxElementsProvider {
                         UnaryExpression::class,
                         AddSubtExpression::class,
                         MultDivExpression::class,
-                        ParenthesisExpression::class
+                        ParenthesisExpression::class,
+                        FunctionCallExpression::class,
                     )
 
                     val statements = listOf(
@@ -45,8 +46,8 @@ class SyntaxElementsProvider {
                         DeclarationStatement::class,
                         DeclarationAssignationStatement::class,
                         FunctionStatement::class,
+                        IfElseStatement::class,
                         IfStatement::class,
-                        IfElseStatement::class
                     )
 
                     Pair(statements, expressions)

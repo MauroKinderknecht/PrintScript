@@ -35,22 +35,19 @@ class ParserImpl(private val matcher: StatementMatcher) : Parser {
     private fun parseStatement(matcher: StatementMatcher, consumer: TokenConsumer): AST {
         // consume next statement and filter not useful tokens
         val content = emptyList<Content<String>>().toMutableList()
-        var braceCounter = 0
+        var braceCount = 0
         while (
-            consumer.peekAny(*SyntaxElements.EOF.get()) == null &&
-            (consumer.peekAny(*SyntaxElements.END.get()) == null || braceCounter != 0)) {
-
+            consumer.peekAny(*SyntaxElements.EOF.get()) == null && (consumer.peekAny(*SyntaxElements.END.get()) == null || braceCount != 0)
+        ) {
             if (consumer.peekAny(*SyntaxElements.NOTUSEFUL.get()) != null) {
-                consumer.consumeAny(*SyntaxElements.NOTUSEFUL.get())
+                consumer.consumeAny(consumer.current().type)
                 continue
             }
 
-            if (consumer.peekAny(TokenTypes.OPENBRACE) != null) braceCounter++
-            else if (consumer.peekAny(TokenTypes.CLOSEBRACE) != null) braceCounter--
-
+            if (consumer.peekAny(TokenTypes.OPENBRACE) != null) braceCount++
+            else if (consumer.peekAny(TokenTypes.CLOSEBRACE) != null) braceCount--
             content += consumer.consume(consumer.current().type)
         }
-        println(content.map { c -> c.token.type })
         if (consumer.peekAny(*SyntaxElements.END.get()) != null) consumer.consume(consumer.current().type)
         else throw ParserException("Missing semicolon", content[content.size - 1].token.range)
         // match with declared statements

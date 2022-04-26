@@ -416,7 +416,12 @@ val ast_031 = ProgramAST(
                 identifier = Content(content = "a", token = tokens_031[2]),
                 type = Content(content = "String", token = tokens_031[5])
             ),
-            expression = FunctionCallAST(function = Content("readInput", token = tokens_031[9])),
+            expression = FunctionCallAST(
+                function = Content("readInput", token = tokens_031[9]),
+                arguments = listOf(
+                    LiteralAST(literal = Content(content = "'Type your name'", token = tokens_031[11]))
+                )
+            ),
         ),
     )
 )

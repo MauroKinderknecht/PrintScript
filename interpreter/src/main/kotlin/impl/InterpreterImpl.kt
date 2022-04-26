@@ -30,11 +30,13 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
 
     private fun isBoolean(str: Any) = str is Boolean
 
-    override fun visit(tree: ProgramAST): Any {
-        return tree.children.forEach { statement ->
-            eval(statement)
-        }
-    }
+    override fun visit(tree: ProgramAST): Any = tree.children.forEach { eval(it) }
+
+    override fun visit(tree: IdentifierAST): Any = context.read(tree.identifier.content)
+
+    override fun visit(tree: VariableAST): String = tree.variable.content
+
+    override fun visit(tree: BlockAST): Any = tree.statements.forEach { eval(it) }
 
     override fun visit(tree: DeclarationAST): Any {
         val modifiable = when (tree.variable.token.type) {
@@ -51,10 +53,6 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
         return context.create(tree.identifier.content, type, modifiable)
     }
 
-    override fun visit(tree: IdentifierAST): Any = context.read(tree.identifier.content)
-
-    override fun visit(tree: VariableAST): String = tree.variable.content
-
     override fun visit(tree: AssignationAST): String {
         val variable = tree.lhs.accept(this)
         val (type, expression) = eval(tree.expression) as Pair<TokenType, Any>
@@ -64,10 +62,15 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
     override fun visit(tree: VoidFunctionAST): Any {
         return when (tree.function.token.type) {
             TokenTypes.PRINTLN -> {
-                if (tree.expression == null) throw InterpreterException("Expresion expected", tree.function.token.range)
                 val (_, expression) = eval(tree.expression!!) as Pair<TokenType, Any>
                 emitter.accept(expression.toString())
             }
+            else -> throw InterpreterException("Function ${tree.function.content} does not exist", tree.function.token.range)
+        }
+    }
+
+    override fun visit(tree: FunctionCallAST): Any {
+        return when (tree.function.token.type) {
             TokenTypes.READINPUT -> {
             }
             else -> throw InterpreterException("Function ${tree.function.content} does not exist", tree.function.token.range)
@@ -126,20 +129,6 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
         }
     }
 
-    override fun visit(tree: BlockAST): Any {
-        return tree.statements.forEach { statement ->
-            eval(statement)
-        }
-    }
-
-    override fun visit(tree: IfAST): Any {
-        val (type, condition) = eval(tree.condition) as Pair<TokenType, Any>
-        if (type != TokenTypes.BOOLEAN) throw InterpreterException("Boolean expression expected")
-        return if (condition == true) eval(tree.truthy)
-        else if (tree.falsy != null) eval(tree.falsy!!)
-        else return Unit
-    }
-
     override fun visit(tree: UnaryExpressionAST): Pair<TokenType, Any> {
         val right = eval(tree.right)
 
@@ -150,5 +139,19 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
             }
             else -> throw InterpreterException("Expression expected", tree.operation.token.range)
         }
+    }
+
+    override fun visit(tree: IfAST): Any {
+        val (type, condition) = eval(tree.condition) as Pair<TokenType, Any>
+        if (type != TokenTypes.BOOLEAN) throw InterpreterException("Boolean expression expected")
+        return if (condition == true) eval(tree.truthy)
+        else Unit
+    }
+
+    override fun visit(tree: IfElseAST): Any {
+        val (type, condition) = eval(tree.condition) as Pair<TokenType, Any>
+        if (type != TokenTypes.BOOLEAN) throw InterpreterException("Boolean expression expected")
+        return if (condition == true) eval(tree.truthy)
+        else eval(tree.falsy)
     }
 }

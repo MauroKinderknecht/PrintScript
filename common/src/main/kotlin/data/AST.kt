@@ -63,6 +63,6 @@ data class IfElseAST(val condition: AST, val truthy: AST, val falsy: AST) : AST(
     override fun accept(visitor: ASTVisitor) = visitor.visit(this)
 }
 
-data class FunctionCallAST(val function: Content<String>) : AST() {
+data class FunctionCallAST(val function: Content<String>, val arguments: List<AST>) : AST() {
     override fun accept(visitor: ASTVisitor) = visitor.visit(this)
 }

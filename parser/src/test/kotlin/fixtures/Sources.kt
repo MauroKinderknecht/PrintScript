@@ -60,4 +60,4 @@ const val src_029 = "if (true) { \n println(30); \n println('Hello'); \n };"
 
 const val src_030 = "if (false) { println(20) } else { println(10) };"
 
-const val src_031 = "let a: String = readInput();"
+const val src_031 = "let a: String = readInput('Type your name');"

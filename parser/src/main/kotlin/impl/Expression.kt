@@ -114,13 +114,14 @@ class ParenthesisExpression(matcher: ExpressionMatcher) : Expression(matcher) {
 // (function) ( ( ) ( ) )
 class FunctionCallExpression(matcher: ExpressionMatcher) : Expression(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
-        if (content.size < 3) return null
+        if (content.size < 4) return null
 
         val function = if ((SyntaxElements.FUNCTIONCALL.contains(content[0].token.type))) content[0] else null
         val openParen = TokenTypes.OPENPAREN == content[1].token.type
-        val closeParen = TokenTypes.CLOSEPAREN == content[2].token.type
+        val argument = matcher.match(content.subList(2, 3))
+        val closeParen = TokenTypes.CLOSEPAREN == content[3].token.type
 
-        return if (function != null && openParen && closeParen) FunctionCallAST(function)
+        return if (function != null && openParen && argument != null && closeParen) FunctionCallAST(function, listOf(argument))
         else null
     }
 }

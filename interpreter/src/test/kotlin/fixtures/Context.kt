@@ -1,7 +1,7 @@
 package fixtures
 
 import enums.TokenTypes
-import impl.ContextElement
+import impl.ContextProviderImpl.ContextElement
 
 val context_002 = mapOf("a" to ContextElement(value = null, type = TokenTypes.STRING, modifiable = true))
 

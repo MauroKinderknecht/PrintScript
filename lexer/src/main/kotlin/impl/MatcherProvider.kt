@@ -34,8 +34,8 @@ class MatcherProvider {
                     matchers[TokenTypes.ASSIGNMENT] = LexerMatcherImpl(TokenTypes.ASSIGNMENT, "[=]")
                     matchers[TokenTypes.OPENPAREN] = LexerMatcherImpl(TokenTypes.OPENPAREN, "[(]")
                     matchers[TokenTypes.CLOSEPAREN] = LexerMatcherImpl(TokenTypes.CLOSEPAREN, "[)]")
-                    matchers[TokenTypes.OPENBRACES] = LexerMatcherImpl(TokenTypes.OPENBRACES, "[{]")
-                    matchers[TokenTypes.CLOSEBRACES] = LexerMatcherImpl(TokenTypes.CLOSEBRACES, "[}]")
+                    matchers[TokenTypes.OPENBRACE] = LexerMatcherImpl(TokenTypes.OPENBRACE, "[{]")
+                    matchers[TokenTypes.CLOSEBRACE] = LexerMatcherImpl(TokenTypes.CLOSEBRACE, "[}]")
 
                     // Declarations
                     matchers[TokenTypes.NUMBER] = LexerMatcherImpl(TokenTypes.NUMBER, "-?\\d+\\.?\\d*")

@@ -27,8 +27,8 @@ enum class TokenTypes(override val type: String) : TokenType {
     ASSIGNMENT("ASSIGNMENT"),
     OPENPAREN("OPENPAREN"),
     CLOSEPAREN("CLOSEPAREN"),
-    OPENBRACES("OPENBRACES"),
-    CLOSEBRACES("CLOSEBRACES"),
+    OPENBRACE("OPENBRACE"),
+    CLOSEBRACE("CLOSEBRACE"),
 
     // Declarations
     NUMBER("NUMBER"),

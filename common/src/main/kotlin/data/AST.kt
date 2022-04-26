@@ -35,7 +35,7 @@ data class AssignationAST(val lhs: AST, val expression: AST) : AST() {
     override fun accept(visitor: ASTVisitor) = visitor.visit(this)
 }
 
-data class FunctionAST(val function: Content<String>, val expression: AST) : AST() {
+data class FunctionAST(val function: Content<String>, val expression: AST?) : AST() {
     override fun accept(visitor: ASTVisitor) = visitor.visit(this)
 }
 
@@ -48,5 +48,13 @@ data class BinaryExpressionAST(val left: AST, val operation: Content<String>, va
 }
 
 data class UnaryExpressionAST(val operation: Content<String>, val right: AST) : AST() {
+    override fun accept(visitor: ASTVisitor) = visitor.visit(this)
+}
+
+data class BlockAST(val statements: List<AST>) : AST() {
+    override fun accept(visitor: ASTVisitor) = visitor.visit(this)
+}
+
+data class IfAST(val condition: AST, val truthy: AST, val falsy: AST? = null) : AST() {
     override fun accept(visitor: ASTVisitor) = visitor.visit(this)
 }

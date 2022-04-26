@@ -3,6 +3,7 @@ package impl
 import data.AST
 import data.ProgramAST
 import enums.SyntaxElements
+import enums.TokenTypes
 import exception.ParserException
 import interfaces.Parser
 import org.austral.ingsis.printscript.common.Token
@@ -34,13 +35,22 @@ class ParserImpl(private val matcher: StatementMatcher) : Parser {
     private fun parseStatement(matcher: StatementMatcher, consumer: TokenConsumer): AST {
         // consume next statement and filter not useful tokens
         val content = emptyList<Content<String>>().toMutableList()
-        while (consumer.peekAny(*SyntaxElements.END.get(), *SyntaxElements.EOF.get()) == null) {
+        var braceCounter = 0
+        while (
+            consumer.peekAny(*SyntaxElements.EOF.get()) == null &&
+            (consumer.peekAny(*SyntaxElements.END.get()) == null || braceCounter != 0)) {
+
             if (consumer.peekAny(*SyntaxElements.NOTUSEFUL.get()) != null) {
                 consumer.consumeAny(*SyntaxElements.NOTUSEFUL.get())
                 continue
             }
+
+            if (consumer.peekAny(TokenTypes.OPENBRACE) != null) braceCounter++
+            else if (consumer.peekAny(TokenTypes.CLOSEBRACE) != null) braceCounter--
+
             content += consumer.consume(consumer.current().type)
         }
+        println(content.map { c -> c.token.type })
         if (consumer.peekAny(*SyntaxElements.END.get()) != null) consumer.consume(consumer.current().type)
         else throw ParserException("Missing semicolon", content[content.size - 1].token.range)
         // match with declared statements

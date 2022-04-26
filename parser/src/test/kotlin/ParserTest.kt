@@ -12,7 +12,7 @@ class ParserTest {
     private val parser: Parser
 
     init {
-        val (statements, expressions) = SyntaxElementsProvider.getExpressionElements(PrintScriptVersion.V1_0)
+        val (statements, expressions) = SyntaxElementsProvider.getExpressionElements(PrintScriptVersion.V1_1)
         val expressionMatcher = ExpressionMatcher(expressions)
         val statementMatcher = StatementMatcher(statements, expressionMatcher)
 
@@ -213,7 +213,6 @@ class ParserTest {
         val tokens = tokens_022
         val ast = ast_022.toString()
         val tree = parser.parse(src_022, tokens)
-        println(tree)
 
         assertEquals(ast, tree.toString())
     }
@@ -226,5 +225,77 @@ class ParserTest {
                 parser.parse(src_023, tokens)
             }
         )
+    }
+
+    @Test
+    fun test024_stringConcatenationTest() {
+        val tokens = tokens_024
+        val ast = ast_024.toString()
+        val tree = parser.parse(src_024, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test025_constTest() {
+        val tokens = tokens_025
+        val ast = ast_025.toString()
+        val tree = parser.parse(src_025, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test026_booleanDataTypeTest() {
+        val tokens = tokens_026
+        val ast = ast_026.toString()
+        val tree = parser.parse(src_026, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test027_inlineIfTest() {
+        val tokens = tokens_027
+        val ast = ast_027.toString()
+        val tree = parser.parse(src_027, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test028_multilineIfTest() {
+        val tokens = tokens_028
+        val ast = ast_022.toString()
+        val tree = parser.parse(src_028, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test029_multiStatementIfBlockTest() {
+        val tokens = tokens_029
+        val ast = ast_022.toString()
+        val tree = parser.parse(src_029, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test030_IfElseTest() {
+        val tokens = tokens_030
+        val ast = ast_022.toString()
+        val tree = parser.parse(src_030, tokens)
+
+        assertEquals(ast, tree.toString())
+    }
+
+    @Test
+    fun test031_readInputTest() {
+        val tokens = tokens_031
+        val ast = ast_022.toString()
+        val tree = parser.parse(src_031, tokens)
+
+        assertEquals(ast, tree.toString())
     }
 }

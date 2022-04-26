@@ -29,6 +29,28 @@ class SyntaxElementsProvider {
 
                     Pair(statements, expressions)
                 }
+                PrintScriptVersion.V1_1 -> {
+                    val expressions = listOf(
+                        IdentifierExpression::class,
+                        LiteralExpression::class,
+                        UnaryExpression::class,
+                        AddSubtExpression::class,
+                        MultDivExpression::class,
+                        ParenthesisExpression::class
+                    )
+
+                    val statements = listOf(
+                        DeclarationStatement::class,
+                        AssignationStatement::class,
+                        DeclarationStatement::class,
+                        DeclarationAssignationStatement::class,
+                        FunctionStatement::class,
+                        IfStatement::class,
+                        IfElseStatement::class
+                    )
+
+                    Pair(statements, expressions)
+                }
             }
         }
     }

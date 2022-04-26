@@ -5,9 +5,9 @@ import org.austral.ingsis.printscript.common.TokenType
 
 enum class SyntaxElements(override val types: List<TokenType>) : SyntaxElement {
 
-    TYPE(listOf(TokenTypes.TYPESTRING, TokenTypes.TYPENUMBER)),
+    TYPE(listOf(TokenTypes.TYPESTRING, TokenTypes.TYPENUMBER, TokenTypes.TYPEBOOLEAN)),
 
-    VARIABLE(listOf(TokenTypes.LET)),
+    VARIABLE(listOf(TokenTypes.LET, TokenTypes.CONST)),
 
     MULTDIVOPERATION(listOf(TokenTypes.TIMES, TokenTypes.DIVIDEDBY)),
 
@@ -21,9 +21,9 @@ enum class SyntaxElements(override val types: List<TokenType>) : SyntaxElement {
 
     TYPEASSIGNMENT(listOf(TokenTypes.COLON)),
 
-    FUNCTION(listOf(TokenTypes.PRINTLN)),
+    FUNCTION(listOf(TokenTypes.PRINTLN, TokenTypes.READINPUT)),
 
-    LITERAL(listOf(TokenTypes.STRING, TokenTypes.NUMBER)),
+    LITERAL(listOf(TokenTypes.STRING, TokenTypes.NUMBER, TokenTypes.BOOLEAN)),
 
     EOF(listOf(TokenTypes.EOF)),
 

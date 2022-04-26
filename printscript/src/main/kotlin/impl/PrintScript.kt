@@ -16,6 +16,7 @@ class PrintScript(private val emitter: Consumer<String>, private val errorHandle
 
         val psVersion = when (version) {
             "1.0" -> PrintScriptVersion.V1_0
+            "1.1" -> PrintScriptVersion.V1_1
             else -> throw PrintScriptException("Unknown target version")
         }
 

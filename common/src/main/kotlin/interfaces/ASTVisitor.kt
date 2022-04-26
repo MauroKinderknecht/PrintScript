@@ -12,4 +12,6 @@ interface ASTVisitor {
     fun visit(tree: BinaryExpressionAST): Any
     fun visit(tree: UnaryExpressionAST): Any
     fun visit(tree: VariableAST): Any
+    fun visit(tree: BlockAST): Any
+    fun visit(tree: IfAST): Any
 }

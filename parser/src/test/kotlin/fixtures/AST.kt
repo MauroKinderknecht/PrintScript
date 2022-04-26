@@ -292,3 +292,58 @@ val ast_022 = ProgramAST(
         )
     )
 )
+
+val ast_024 = ProgramAST(
+    children = listOf(
+        AssignationAST(
+            lhs = VariableAST(variable = Content(content = "a", token = tokens_024[0])),
+            expression = BinaryExpressionAST(
+                left = LiteralAST(literal = Content("'Test string concatenation'", token = tokens_024[4])),
+                operation = Content(content = "+", token = tokens_024[6]),
+                right = LiteralAST(literal = Content(content = "23", token = tokens_024[8]))
+            )
+        ),
+    )
+)
+
+val ast_025 = ProgramAST(
+    children = listOf(
+        AssignationAST(
+            lhs = DeclarationAST(
+                variable = Content(content = "const", token = tokens_025[0]),
+                identifier = Content(content = "a", token = tokens_025[2]),
+                type = Content(content = "Number", token = tokens_025[5])
+            ),
+            expression = LiteralAST(literal = Content("20", token = tokens_025[9])),
+        ),
+    )
+)
+
+val ast_026 = ProgramAST(
+    children = listOf(
+        AssignationAST(
+            lhs = DeclarationAST(
+                variable = Content(content = "let", token = tokens_026[0]),
+                identifier = Content(content = "a", token = tokens_026[2]),
+                type = Content(content = "Boolean", token = tokens_026[5])
+            ),
+            expression = LiteralAST(literal = Content("true", token = tokens_026[9])),
+        ),
+    )
+)
+
+val ast_027 = ProgramAST(
+    children = listOf(
+        IfAST(
+            condition = LiteralAST(literal = Content("true", token = tokens_027[3])),
+            truthy = BlockAST(
+                statements = listOf(
+                    FunctionAST(
+                        function = Content(content = "println", token = tokens_027[8]),
+                        expression = LiteralAST(literal = Content("20", token = tokens_027[10])),
+                    )
+                )
+            )
+        )
+    )
+)

@@ -28,6 +28,8 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
 
     private fun isString(str: Any) = str is String
 
+    private fun isBoolean(str: Any) = str is Boolean
+
     override fun visit(tree: ProgramAST): Any {
         return tree.children.forEach { statement ->
             eval(statement)
@@ -37,11 +39,13 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
     override fun visit(tree: DeclarationAST): Any {
         val modifiable = when (tree.variable.token.type) {
             TokenTypes.LET -> true
+            TokenTypes.CONST -> false
             else -> throw InterpreterException("Type ${tree.variable.token.type} is not a variable", tree.variable.token.range)
         }
         val type = when (tree.type.token.type) {
             TokenTypes.TYPENUMBER -> TokenTypes.NUMBER
             TokenTypes.TYPESTRING -> TokenTypes.STRING
+            TokenTypes.TYPEBOOLEAN -> TokenTypes.BOOLEAN
             else -> throw InterpreterException("Type ${tree.type.token.type} is not a data type", tree.type.token.range)
         }
         return context.create(tree.identifier.content, type, modifiable)
@@ -51,18 +55,20 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
 
     override fun visit(tree: VariableAST): String = tree.variable.content
 
-    override fun visit(tree: AssignationAST): Any {
+    override fun visit(tree: AssignationAST): String {
         val variable = tree.lhs.accept(this)
         val (type, expression) = eval(tree.expression) as Pair<TokenType, Any>
         return context.write(variable as String, type, expression)
     }
 
     override fun visit(tree: FunctionAST): Any {
-        val (_, expression) = eval(tree.expression) as Pair<TokenType, Any>
-
         return when (tree.function.token.type) {
             TokenTypes.PRINTLN -> {
+                if (tree.expression == null) throw InterpreterException("Expresion expected", tree.function.token.range)
+                val (_, expression) = eval(tree.expression!!) as Pair<TokenType, Any>
                 emitter.accept(expression.toString())
+            }
+            TokenTypes.READINPUT -> {
             }
             else -> throw InterpreterException("Function ${tree.function.content} does not exist", tree.function.token.range)
         }
@@ -73,6 +79,7 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
         return when (tree.literal.token.type) {
             TokenTypes.STRING -> Pair(TokenTypes.STRING, content.replace(Regex("[\"']"), ""))
             TokenTypes.NUMBER -> Pair(TokenTypes.NUMBER, if (content.contains('.')) content.toDouble() else content.toInt())
+            TokenTypes.BOOLEAN -> Pair(TokenTypes.BOOLEAN, content.toBoolean())
             else -> throw InterpreterException("Type ${tree.literal.token.type} does not exist", tree.literal.token.range)
         }
     }
@@ -84,9 +91,8 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
         return when (tree.operation.token.type) {
             TokenTypes.PLUS -> {
                 if (
-                    !isNumber(left) && !isString(left) ||
-                    !isNumber(right) && !isString(left) ||
-                    !isNumber(right) && !isString(right)
+                    isNumber(left) && !isNumber(right) ||
+                    isBoolean(left)
                 ) throw InterpreterException("Expression expected", tree.operation.token.range)
                 if (isNumber(left)) {
                     Pair(
@@ -118,6 +124,20 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
             }
             else -> throw InterpreterException("Expression expected", tree.operation.token.range)
         }
+    }
+
+    override fun visit(tree: BlockAST): Any {
+        return tree.statements.forEach { statement ->
+            eval(statement)
+        }
+    }
+
+    override fun visit(tree: IfAST): Any {
+        val (type, condition) = eval(tree.condition) as Pair<TokenType, Any>
+        if (type != TokenTypes.BOOLEAN) throw InterpreterException("Boolean expression expected")
+        return if (condition == true) eval(tree.truthy)
+        else if (tree.falsy != null) eval(tree.falsy!!)
+        else return Unit
     }
 
     override fun visit(tree: UnaryExpressionAST): Pair<TokenType, Any> {

@@ -17,6 +17,7 @@ class ContextProviderImpl : ContextProvider {
     override fun write(variable: String, type: TokenType, value: Any): String {
         val element = environment[variable]
             ?: throw InterpreterException("Variable $variable is not initialized")
+        if (element.value != null && !element.modifiable) throw InterpreterException("Constant $variable cannot be reasigned")
         if (element.type != type) throw InterpreterException("Type mismatch $value is not of type ${element.type}")
         element.update(value)
         return variable
@@ -33,10 +34,10 @@ class ContextProviderImpl : ContextProvider {
     override fun toString(): String {
         return environment.toString()
     }
-}
 
-data class ContextElement(var value: Any? = null, val type: TokenType, val modifiable: Boolean) {
-    fun update(value: Any) {
-        this.value = value
+    data class ContextElement(var value: Any? = null, val type: TokenType, val modifiable: Boolean) {
+        fun update(value: Any) {
+            this.value = value
+        }
     }
 }

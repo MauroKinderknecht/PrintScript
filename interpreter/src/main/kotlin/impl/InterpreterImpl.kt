@@ -9,7 +9,7 @@ import interfaces.Interpreter
 import org.austral.ingsis.printscript.common.TokenType
 import java.util.function.Consumer
 
-class InterpreterImpl(private var emitter: Consumer<String>, private var context: ContextProvider) : Interpreter, ASTVisitor {
+class InterpreterImpl(private var emitter: Consumer<String>, private val reader: () -> (String), private var context: ContextProvider) : Interpreter, ASTVisitor {
 
     override fun interpret(tree: AST) {
         if (tree !is ProgramAST) throw InterpreterException("Not a PrintScript program", null)
@@ -72,6 +72,9 @@ class InterpreterImpl(private var emitter: Consumer<String>, private var context
     override fun visit(tree: FunctionCallAST): Any {
         return when (tree.function.token.type) {
             TokenTypes.READINPUT -> {
+                val (_, argument) = eval(tree.arguments[0]) as Pair<TokenType, Any>
+                emitter.accept(argument.toString())
+                return Pair(TokenTypes.STRING, reader())
             }
             else -> throw InterpreterException("Function ${tree.function.content} does not exist", tree.function.token.range)
         }

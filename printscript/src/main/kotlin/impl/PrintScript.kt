@@ -5,8 +5,13 @@ import exception.PrintScriptException
 import interfaces.*
 import java.util.function.Consumer
 
-class PrintScript(private val emitter: Consumer<String>, private val errorHandler: Consumer<String>, version: String, private val verbose: Boolean) {
-
+class PrintScript(
+    private val emitter: Consumer<String>,
+    private val errorHandler: Consumer<String>,
+    reader: () -> (String),
+    version: String,
+    private val verbose: Boolean
+) {
     private val context: ContextProvider
     private val lexer: Lexer
     private val parser: Parser
@@ -29,7 +34,7 @@ class PrintScript(private val emitter: Consumer<String>, private val errorHandle
         parser = ParserImpl(statementMatcher)
 
         context = ContextProviderImpl()
-        interpreter = InterpreterImpl(emitter, context)
+        interpreter = InterpreterImpl(emitter, reader, context)
     }
 
     fun getContext(): ContextProvider = context

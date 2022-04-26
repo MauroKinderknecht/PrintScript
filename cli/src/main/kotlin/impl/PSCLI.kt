@@ -7,7 +7,7 @@ class CLI {
     private val version = "1.1"
     private val verbose = false
 
-    private val printScript = PrintScript(System.out::println, System.out::println, version, verbose)
+    private val printScript = PrintScript(::println, ::println, ::readln, version, verbose,)
 
     private fun interpret(src: String) = printScript.interpret(src)
 

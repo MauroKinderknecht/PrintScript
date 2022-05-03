@@ -39,8 +39,7 @@ class ParserImpl(private val matcher: StatementMatcher) : Parser {
         else if (consumer.peekAny(TokenTypes.CLOSEBRACE) != null) {
             content += consumer.consume(consumer.current().type)
             if (consumer.peekAny(TokenTypes.ELSE) != null) content += getContent(consumer)
-        }
-        else throw ParserException("Missing semicolon", content[content.size - 1].token.range)
+        } else throw ParserException("Missing semicolon", content[content.size - 1].token.range)
         // match with declared statements
         return matcher.match(content)
             ?: throw ParserException("Could not match statement ${content.map { c -> c.content }.reduce{str, c -> "$str $c" }}", content[0].token.range)

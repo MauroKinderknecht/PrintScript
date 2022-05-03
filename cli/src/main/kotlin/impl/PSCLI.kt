@@ -71,7 +71,7 @@ class CLI {
         println("Select an version:")
         val version = readln()
 
-        val printScript = PrintScript(::println, ::println, {msg: String -> read(msg)}, version, false)
+        val printScript = PrintScript(::println, ::println, { msg: String -> read(msg) }, version, false)
 
         while (true) {
             print("PrintScript > ")
@@ -88,7 +88,7 @@ class CLI {
         val srcFile = File(path)
         val src = Files.readString(srcFile.toPath(), StandardCharsets.US_ASCII)
 
-        val printScript = PrintScript(::println, ::println, {msg: String -> read(msg)}, version, true)
+        val printScript = PrintScript(::println, ::println, { msg: String -> read(msg) }, version, true)
         if (validate) printScript.validate(src) else printScript.interpret(src)
     }
 }

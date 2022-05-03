@@ -20,7 +20,7 @@ class InterpreterTest {
     init {
         contextProvider = ContextProviderImpl()
         consumer = TestConsumer()
-        interpreter = InterpreterImpl(consumer, {msg: String -> read(msg)}, contextProvider)
+        interpreter = InterpreterImpl(consumer, { msg: String -> read(msg) }, contextProvider)
     }
 
     private fun read(msg: String): String {

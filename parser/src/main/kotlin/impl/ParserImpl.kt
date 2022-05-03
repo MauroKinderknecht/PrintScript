@@ -34,10 +34,26 @@ class ParserImpl(private val matcher: StatementMatcher) : Parser {
 
     private fun parseStatement(matcher: StatementMatcher, consumer: TokenConsumer): AST {
         // consume next statement and filter not useful tokens
+        val content = getContent(consumer).toMutableList()
+        if (consumer.peekAny(*SyntaxElements.END.get()) != null) consumer.consume(consumer.current().type)
+        else if (consumer.peekAny(TokenTypes.CLOSEBRACE) != null) {
+            content += consumer.consume(consumer.current().type)
+            if (consumer.peekAny(TokenTypes.ELSE) != null) content += getContent(consumer)
+        }
+        else throw ParserException("Missing semicolon", content[content.size - 1].token.range)
+        // match with declared statements
+        return matcher.match(content)
+            ?: throw ParserException("Could not match statement ${content.map { c -> c.content }.reduce{str, c -> "$str $c" }}", content[0].token.range)
+    }
+
+    private fun getContent(consumer: TokenConsumer): List<Content<String>> {
         val content = emptyList<Content<String>>().toMutableList()
         var braceCount = 0
+
         while (
-            consumer.peekAny(*SyntaxElements.EOF.get()) == null && (consumer.peekAny(*SyntaxElements.END.get()) == null || braceCount != 0)
+            consumer.peekAny(*SyntaxElements.EOF.get()) == null &&
+            (consumer.peekAny(*SyntaxElements.END.get()) == null || braceCount != 0) &&
+            (consumer.peekAny(TokenTypes.CLOSEBRACE) == null || braceCount != 1)
         ) {
             if (consumer.peekAny(*SyntaxElements.NOTUSEFUL.get()) != null) {
                 consumer.consumeAny(consumer.current().type)
@@ -48,10 +64,7 @@ class ParserImpl(private val matcher: StatementMatcher) : Parser {
             else if (consumer.peekAny(TokenTypes.CLOSEBRACE) != null) braceCount--
             content += consumer.consume(consumer.current().type)
         }
-        if (consumer.peekAny(*SyntaxElements.END.get()) != null) consumer.consume(consumer.current().type)
-        else throw ParserException("Missing semicolon", content[content.size - 1].token.range)
-        // match with declared statements
-        return matcher.match(content)
-            ?: throw ParserException("Could not match statement ${content.map { c -> c.content }.reduce{str, c -> "$str $c" }}", content[0].token.range)
+
+        return content
     }
 }

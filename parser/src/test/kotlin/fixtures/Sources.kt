@@ -52,12 +52,12 @@ const val src_025 = "const a: Number = 20;"
 
 const val src_026 = "let a: Boolean = true;"
 
-const val src_027 = "if (true) { println(20) };"
+const val src_027 = "if (true) { println(20) }"
 
-const val src_028 = "if (true) { \n println(20); \n };"
+const val src_028 = "if (true) { \n println(20); \n }"
 
-const val src_029 = "if (true) { \n println(30); \n println('Hello'); \n };"
+const val src_029 = "if (true) { \n println(30); \n println('Hello'); \n }"
 
-const val src_030 = "if (false) { println(20) } else { println(10) };"
+const val src_030 = "if (false) { println(20) } else { println(10) }"
 
 const val src_031 = "let a: String = readInput('Type your name');"

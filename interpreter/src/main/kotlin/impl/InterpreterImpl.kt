@@ -82,8 +82,7 @@ class InterpreterImpl(private var emitter: Consumer<String>, private val reader:
                 if (!isValidation) {
                     emitter.accept(argument.toString())
                     Pair(TokenTypes.STRING, reader(argument.toString()))
-                }
-                else Pair(TokenTypes.STRING, "placeholder")
+                } else Pair(TokenTypes.STRING, "placeholder")
             }
             else -> throw InterpreterException("Function ${tree.function.content} does not exist", tree.function.token.range)
         }

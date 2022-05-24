@@ -44,7 +44,7 @@ class LexerImpl(private var matchers: EnumMap<TokenTypes, LexerMatcher>) : Lexer
 
                     token
                 }.first()
-
+            println(matched.type.type)
             tokens += matched
         }
 

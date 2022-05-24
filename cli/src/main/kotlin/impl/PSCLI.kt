@@ -63,7 +63,6 @@ class CLI {
     }
 
     private fun read(msg: String): String {
-        println(msg)
         return readln()
     }
 

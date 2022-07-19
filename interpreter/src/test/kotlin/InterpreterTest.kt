@@ -20,7 +20,12 @@ class InterpreterTest {
     init {
         contextProvider = ContextProviderImpl()
         consumer = TestConsumer()
-        interpreter = InterpreterImpl(consumer, ::readln, contextProvider)
+        interpreter = InterpreterImpl(consumer, { msg: String -> read(msg) }, contextProvider)
+    }
+
+    private fun read(msg: String): String {
+        println(msg)
+        return readln()
     }
 
     // V1 tests

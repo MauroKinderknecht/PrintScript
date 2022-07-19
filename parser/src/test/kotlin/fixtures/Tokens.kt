@@ -403,8 +403,7 @@ val tokens_027 = listOf(
     Token(type = TokenTypes.CLOSEPAREN, from = 22, to = 23, range = LexicalRange(startCol = 22, startLine = 0, endCol = 23, endLine = 0)),
     Token(type = TokenTypes.WHITESPACE, from = 23, to = 24, range = LexicalRange(startCol = 23, startLine = 0, endCol = 24, endLine = 0)),
     Token(type = TokenTypes.CLOSEBRACE, from = 24, to = 25, range = LexicalRange(startCol = 24, startLine = 0, endCol = 25, endLine = 0)),
-    Token(type = TokenTypes.SEMICOLON, from = 25, to = 26, range = LexicalRange(startCol = 25, startLine = 0, endCol = 26, endLine = 0)),
-    Token(type = TokenTypes.EOF, from = 26, to = 26, range = LexicalRange(startCol = 26, startLine = 0, endCol = 26, endLine = 0))
+    Token(type = TokenTypes.EOF, from = 25, to = 25, range = LexicalRange(startCol = 25, startLine = 0, endCol = 25, endLine = 0))
 )
 
 val tokens_028 = listOf(
@@ -427,8 +426,7 @@ val tokens_028 = listOf(
     Token(type = TokenTypes.EOL, from = 27, to = 28, range = LexicalRange(startCol = 14, startLine = 1, endCol = 0, endLine = 2)),
     Token(type = TokenTypes.WHITESPACE, from = 28, to = 29, range = LexicalRange(startCol = 0, startLine = 2, endCol = 1, endLine = 2)),
     Token(type = TokenTypes.CLOSEBRACE, from = 29, to = 30, range = LexicalRange(startCol = 1, startLine = 2, endCol = 2, endLine = 2)),
-    Token(type = TokenTypes.SEMICOLON, from = 30, to = 31, range = LexicalRange(startCol = 2, startLine = 2, endCol = 3, endLine = 2)),
-    Token(type = TokenTypes.EOF, from = 31, to = 31, range = LexicalRange(startCol = 3, startLine = 2, endCol = 3, endLine = 2))
+    Token(type = TokenTypes.EOF, from = 30, to = 30, range = LexicalRange(startCol = 2, startLine = 2, endCol = 2, endLine = 2))
 )
 
 val tokens_029 = listOf(
@@ -459,8 +457,7 @@ val tokens_029 = listOf(
     Token(type = TokenTypes.EOL, from = 47, to = 48, range = LexicalRange(startCol = 19, startLine = 2, endCol = 0, endLine = 3)),
     Token(type = TokenTypes.WHITESPACE, from = 48, to = 49, range = LexicalRange(startCol = 0, startLine = 3, endCol = 1, endLine = 3)),
     Token(type = TokenTypes.CLOSEBRACE, from = 49, to = 50, range = LexicalRange(startCol = 1, startLine = 3, endCol = 2, endLine = 3)),
-    Token(type = TokenTypes.SEMICOLON, from = 50, to = 51, range = LexicalRange(startCol = 2, startLine = 3, endCol = 3, endLine = 3)),
-    Token(type = TokenTypes.EOF, from = 51, to = 51, range = LexicalRange(startCol = 3, startLine = 3, endCol = 3, endLine = 3))
+    Token(type = TokenTypes.EOF, from = 50, to = 50, range = LexicalRange(startCol = 3, startLine = 2, endCol = 3, endLine = 2))
 )
 
 val tokens_030 = listOf(
@@ -489,8 +486,7 @@ val tokens_030 = listOf(
     Token(type = TokenTypes.CLOSEPAREN, from = 44, to = 45, range = LexicalRange(startCol = 44, startLine = 0, endCol = 45, endLine = 0)),
     Token(type = TokenTypes.WHITESPACE, from = 45, to = 46, range = LexicalRange(startCol = 45, startLine = 0, endCol = 46, endLine = 0)),
     Token(type = TokenTypes.CLOSEBRACE, from = 46, to = 47, range = LexicalRange(startCol = 46, startLine = 0, endCol = 47, endLine = 0)),
-    Token(type = TokenTypes.SEMICOLON, from = 47, to = 48, range = LexicalRange(startCol = 47, startLine = 0, endCol = 48, endLine = 0)),
-    Token(type = TokenTypes.EOF, from = 48, to = 48, range = LexicalRange(startCol = 48, startLine = 0, endCol = 48, endLine = 0))
+    Token(type = TokenTypes.EOF, from = 47, to = 47, range = LexicalRange(startCol = 47, startLine = 0, endCol = 47, endLine = 0))
 )
 
 val tokens_031 = listOf(

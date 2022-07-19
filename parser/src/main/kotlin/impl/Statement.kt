@@ -113,8 +113,6 @@ class IfStatement(matcher: StatementMatcher) : Statement(matcher) {
     override fun parse(content: List<Content<String>>): AST? {
         if (content.size < 7) return null
 
-        println(content.map { it.token.type })
-
         val ifToken = content[0].token.type == TokenTypes.IF
         val openParen = content[1].token.type == TokenTypes.OPENPAREN
         val condition = matcher.matchExpression(content.subList(2, 3))

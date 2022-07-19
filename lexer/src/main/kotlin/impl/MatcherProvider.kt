@@ -39,7 +39,7 @@ class MatcherProvider {
 
                     // Declarations
                     matchers[TokenTypes.NUMBER] = LexerMatcherImpl(TokenTypes.NUMBER, "-?\\d+\\.?\\d*")
-                    matchers[TokenTypes.STRING] = LexerMatcherImpl(TokenTypes.STRING, "\".*\"|\'.*\'")
+                    matchers[TokenTypes.STRING] = LexerMatcherImpl(TokenTypes.STRING, "\"[^\n\"]*\"|\'[^\n\']*\'",)
                     matchers[TokenTypes.BOOLEAN] = LexerMatcherImpl(TokenTypes.BOOLEAN, "true|false")
 
                     // Variables

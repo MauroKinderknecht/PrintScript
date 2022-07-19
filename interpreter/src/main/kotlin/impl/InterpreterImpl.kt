@@ -9,7 +9,7 @@ import interfaces.Interpreter
 import org.austral.ingsis.printscript.common.TokenType
 import java.util.function.Consumer
 
-class InterpreterImpl(private var emitter: Consumer<String>, private val reader: () -> (String), private var context: ContextProvider) : Interpreter, ASTVisitor {
+class InterpreterImpl(private var emitter: Consumer<String>, private val reader: (String) -> (String), private var context: ContextProvider) : Interpreter, ASTVisitor {
 
     var isValidation: Boolean = false
 
@@ -79,9 +79,10 @@ class InterpreterImpl(private var emitter: Consumer<String>, private val reader:
         return when (tree.function.token.type) {
             TokenTypes.READINPUT -> {
                 val (_, argument) = eval(tree.arguments[0]) as Pair<TokenType, Any>
-                emitter.accept(argument.toString())
-                if (!isValidation) Pair(TokenTypes.STRING, reader())
-                else Pair(TokenTypes.STRING, "placeholder")
+                if (!isValidation) {
+                    emitter.accept(argument.toString())
+                    Pair(TokenTypes.STRING, reader(argument.toString()))
+                } else Pair(TokenTypes.STRING, "placeholder")
             }
             else -> throw InterpreterException("Function ${tree.function.content} does not exist", tree.function.token.range)
         }

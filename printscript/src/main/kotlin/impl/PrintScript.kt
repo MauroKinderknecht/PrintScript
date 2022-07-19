@@ -8,7 +8,7 @@ import java.util.function.Consumer
 class PrintScript(
     private val emitter: Consumer<String>,
     private val errorHandler: Consumer<String>,
-    reader: () -> (String),
+    reader: (String) -> (String),
     version: String,
     private val verbose: Boolean
 ) {

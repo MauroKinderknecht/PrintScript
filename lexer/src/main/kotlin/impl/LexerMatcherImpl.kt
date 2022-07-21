@@ -7,18 +7,26 @@ import java.util.regex.Pattern
 
 class LexerMatcherImpl : LexerMatcher {
 
-    private val pattern: Pattern
-    private val regex: String?
+    private val pattern:
+
+        Pattern
+    private val regex:
+
+        String?
 
     constructor(type: TokenType, regex: String) {
         pattern = Pattern.compile(String.format("(?<%s>%s)", type, regex))
+
         this.regex = regex
     }
 
     constructor(matchers: List<LexerMatcher>) {
+
         pattern = Pattern.compile(
+
             matchers.joinToString("|") { it.getPattern().toString() }
         )
+
         this.regex = null
     }
 
@@ -27,8 +35,10 @@ class LexerMatcherImpl : LexerMatcher {
             String.format(
                 "(?<%s>%s)",
                 type,
+
                 String.format(
                     "(?!(%s)\\b)\\b%s",
+
                     notMatchers.filter { it.getRegex() != null }.joinToString("|") { it.getRegex()!! },
                     regex
                 )
